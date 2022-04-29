@@ -8,6 +8,7 @@ class Gearbox {
 
     public:
     Gearbox();
+    Gearbox(int currentGear);
     ~Gearbox();
 
     bool checkGear(int gear);
