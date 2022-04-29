@@ -1,3 +1,0 @@
-/home/myung/repos/volvo-boot-camp-2022-smokey-lab/build/CMakeFiles/rebuild_cache.dir
-/home/myung/repos/volvo-boot-camp-2022-smokey-lab/build/CMakeFiles/edit_cache.dir
-/home/myung/repos/volvo-boot-camp-2022-smokey-lab/build/CMakeFiles/input_handler_app.dir
