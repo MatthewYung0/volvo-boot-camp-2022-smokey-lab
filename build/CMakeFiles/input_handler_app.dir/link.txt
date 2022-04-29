@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/input_handler_app.dir/main.cpp.o CMakeFiles/input_handler_app.dir/src/checkInput.cpp.o  -o input_handler_app  -lcurses 
