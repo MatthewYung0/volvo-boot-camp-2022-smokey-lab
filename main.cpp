@@ -21,7 +21,7 @@ int main()
 
     CanMessage can_msg;
 
-    for (;;)
+    while (true)
     {
         if ((ch = getch()) == ERR)
         {
@@ -31,6 +31,9 @@ int main()
             if (checkInput(ch) != -1) {
                 can_msg.SetFrame(ch);
                 SendMessage(sockat_can, can_msg);
+                if (ch == 115) {
+                    can_msg.SetIgnition();
+                }
             } else {
                 std::cout << "Invalid input!" << std::endl;
             } 

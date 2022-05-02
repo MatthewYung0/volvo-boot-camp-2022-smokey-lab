@@ -8,7 +8,9 @@
 enum UserInput {
     start_stop = 115 , gear_drive = 100, gear_rear = 114,
     gear_neutral = 110, gear_park = 112, pedal_down = 259,
-    pedal_up = 258 
+    pedal_up = 258, throttle_0 = 48, throttle_10 = 49, throttle_20 = 50, 
+    throttle_30 = 51, throttle_40 = 52, throttle_50 = 53, throttle_60 = 54, 
+    throttle_70 = 55, throttle_80 = 56, throttle_90 = 57,  
 };
 
 CanMessage::CanMessage() {
@@ -41,10 +43,16 @@ void CanMessage::SetGearRear() {
     this->frame.data[GEAR] = 2;
 }
 void CanMessage::SetPedalPosUp() {
-    this->frame.data[PEDAL_POS] -= 10;
+    if (this->frame.data[PEDAL_POS] >= 10)
+        this->frame.data[PEDAL_POS] -= 10;
 }
 void CanMessage::SetPedalPosDown() {
-    this->frame.data[PEDAL_POS] += 10;
+    if (this->frame.data[PEDAL_POS] <= 90)
+        this->frame.data[PEDAL_POS] += 10;
+}
+
+void CanMessage::SetPedalPos(int _pedal_pos) {
+    this->frame.data[PEDAL_POS] = _pedal_pos;
 }
 
 void CanMessage::SetFrame(int _input) {
@@ -80,6 +88,48 @@ void CanMessage::SetFrame(int _input) {
         std::cout << "pedal_down" << std::endl;
         CanMessage::SetPedalPosDown();
         break;
+    
+    case UserInput::throttle_0:
+        std::cout << "throttle_0" << std::endl;
+        CanMessage::SetPedalPos(0);
+        break;
+    case UserInput::throttle_10:
+        std::cout << "throttle_10" << std::endl;
+        CanMessage::SetPedalPos(10);
+        break;
+    case UserInput::throttle_20:
+        std::cout << "throttle_20" << std::endl;
+        CanMessage::SetPedalPos(20);
+        break;
+    case UserInput::throttle_30:
+        std::cout << "throttle_30" << std::endl;
+        CanMessage::SetPedalPos(30);
+        break;
+    case UserInput::throttle_40:
+        std::cout << "throttle_40" << std::endl;
+        CanMessage::SetPedalPos(40);
+        break;
+    case UserInput::throttle_50:
+        std::cout << "throttle_50" << std::endl;
+        CanMessage::SetPedalPos(50);
+        break;
+    case UserInput::throttle_60:
+        std::cout << "throttle_60" << std::endl;
+        CanMessage::SetPedalPos(60);
+        break;
+    case UserInput::throttle_70:
+        std::cout << "throttle_70" << std::endl;
+        CanMessage::SetPedalPos(70);
+        break;
+    case UserInput::throttle_80:
+        std::cout << "throttle_80" << std::endl;
+        CanMessage::SetPedalPos(80);
+        break;
+    case UserInput::throttle_90:
+        std::cout << "throttle_90" << std::endl;
+        CanMessage::SetPedalPos(90);
+        break;
+
     default:
         break;
     }
