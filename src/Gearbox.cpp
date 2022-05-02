@@ -22,7 +22,7 @@ int getGear()
     return currentGear;
 }
 
-void setGear(int gear)
+void Gearbox::setGear(int gear)
 {
     if (checkGear(gear))
     {
