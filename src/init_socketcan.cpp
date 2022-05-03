@@ -17,3 +17,10 @@ void SendMessage(scpp::SocketCan &sockat_can, CanMessage &can_msg) {
     else
         printf("Message was written to the socket \n");
 }
+
+void ReadMessage(scpp::SocketCan &sockat_can, scpp::CanFrame &fr) {
+    if (sockat_can.read(fr) == scpp::STATUS_OK) {
+    } else {
+        for (size_t i = 0; i < 9999; i++); //STUPID SLEEP?
+    }
+}
