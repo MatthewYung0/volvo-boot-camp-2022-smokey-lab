@@ -1,8 +1,8 @@
 #include "Emulator.h"
 
 Emulator::Emulator()
-    : gearRatio{-0.0085, 0.0077, 0.0123, 0.0185, 0.023, 0.81}, idleRPM(650),
-      maxRPM(6500), maxGear(5) {
+    : gearRatio{-0.0085, 0.00667, 0.0133, 0.02, 0.027, 0.029, 0.033},
+      idleRPM(650), maxRPM(7500), maxGear(6) {
 
   currentRPM = 0;
   carSpeed = 0;
@@ -20,27 +20,36 @@ int Emulator::getCurrentRPM() const { return currentRPM; }
 bool Emulator::getEngineState() const { return engineState; }
 
 void Emulator::setCurrentRPM(int currentRPM) {
-  // Check if RPM is inside the range
-  if (currentRPM < idleRPM)
-    currentRPM = idleRPM;
-  else if (currentRPM > maxRPM)
-    currentRPM = maxRPM;
+  // Check if engine is on and R, N or D gear
+  if (engineState &&
+      (currentGear == 0 || currentGear == 1 || currentGear == 3)) {
+    // Check if RPM is inside the range
+    if (currentRPM < idleRPM)
+      currentRPM = idleRPM;
+    else if (currentRPM > maxRPM)
+      currentRPM = maxRPM;
 
-  this->currentRPM = currentRPM;
+    this->currentRPM = currentRPM;
+  }
 }
 
 void Emulator::setEngineState(bool engineState) {
-  this->engineState = engineState;
+  // Change engine state (on/off) only when carSpeed is 0
+  if (carSpeed == 0)
+    this->engineState = engineState;
+  // Set D mode
+  setCurrentGear(2);
+  // idle, even when off (default min)
+  setCurrentRPM(idleRPM);
 }
 
 void Emulator::moveRearward() {
-  // Check first if RPM is in the correct range
-  if (currentRPM >= idleRPM && currentRPM <= maxRPM) {
+  // Check if speed is 0t, engine is on and reverse gear
+  if (carSpeed == 0 && engineState && currentGear == 0) {
     carSpeed = abs(currentRPM * gearRatio[0]);
     std::cout << "4 " << std::endl;
   }
 
-  setCarSpeed(carSpeed);
   // Test printout
   std::cout << "Move R: " << currentRPM * gearRatio[0] << "  " << carSpeed
             << std::endl;
@@ -61,8 +70,8 @@ void Emulator::moveForward() {
   std::cout << currentRPM << std::endl;
   std::cout << getCurrentRPM() << std::endl;
 
-  // Check first if RPM is in the correct range
-  if (currentRPM >= idleRPM && currentRPM <= maxRPM) {
+  // Check if, engine is on and D gear
+  if (engineState && currentGear == 3) {
     std::cout << "\n000 " << std::endl;
     std::cout << "\n000 " << std::endl;
     // ShiftUp when RPM is 1500 rpm bellow the maxRPM
@@ -89,8 +98,6 @@ void Emulator::moveForward() {
     }
   }
 
-  setCarSpeed(carSpeed);
-
   // Test printout
   std::cout << "Move F: " << currentRPM * gearRatio[dGear] << "  " << carSpeed
             << std::endl;
@@ -112,12 +119,14 @@ bool Emulator::checkGear(int gearInput) {
 
 int Emulator::getCurrentGear() const { return currentGear; }
 
+// Set User input Gear, R, N, P or D
 void Emulator::setCurrentGear(int gearInput) {
   if (checkGear(gearInput)) {
     this->currentGear = gearInput;
   }
 }
 
+// Set D mode gear
 void Emulator::setDGear() { dGear = 1; };
 
 int Emulator::getDGear() const { return dGear; };
@@ -127,13 +136,13 @@ float Emulator::getCarSpeed() const { return carSpeed; };
 void Emulator::setCarSpeed(float carSpeed) { this->carSpeed = carSpeed; };
 
 void Emulator::shiftUp() {
-  // Check if D gear is inside interval 1-5
+  // Check if D gear is inside interval 1-6
   if (dGear > 0 && dGear <= maxGear)
     dGear++;
 }
 
 void Emulator::shiftDown() {
-  // Check if D gear is inside interval 1-5
+  // Check if D gear is inside interval 1-6
   if (dGear > 1 && dGear < maxGear + 1)
     dGear--;
 }

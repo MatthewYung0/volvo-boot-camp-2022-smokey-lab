@@ -5,6 +5,8 @@ using namespace std;
 
 int main() {
   Emulator volvo;
+  volvo.setEngineState(1);
+  cout << "engineState: " << volvo.getEngineState() << endl;
   cout << "currenRPM: " << volvo.getCurrentRPM() << endl;
   cout << "carSpeed: " << volvo.getCarSpeed() << endl;
   volvo.setCurrentRPM(700);
@@ -16,7 +18,7 @@ int main() {
   cout << "MaxGear: " << volvo.getMaxGear() << endl;
   cout << "currentGear default: " << volvo.getCurrentGear() << endl;
   volvo.setCurrentGear(0);
-  volvo.setCurrentRPM(6000);
+  volvo.setCurrentRPM(7000);
   cout << "currentGear to 0 (Reverse): " << volvo.getCurrentGear() << endl
        << endl;
   volvo.moveRearward();
@@ -52,7 +54,7 @@ int main() {
   cout << "\nDGear, ShiftDown 1: " << volvo.getDGear() << endl << endl;
   cout << "carSpeed: " << volvo.getCarSpeed() << endl;
   cout << "#################################" << endl;
-  volvo.setCurrentRPM(6000);
+  volvo.setCurrentRPM(7500);
   volvo.moveForward();
   cout << "#################################" << endl;
   volvo.setCurrentRPM(2000);
