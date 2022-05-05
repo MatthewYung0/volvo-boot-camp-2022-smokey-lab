@@ -9,6 +9,8 @@ Emulator::Emulator()
   engineState = 0;
   currentGear = 2; // Set park as default
   dGear = 1;
+  pedalDown = 0;
+  pedalUpp = 0;
 };
 
 // Emulator() = default;
@@ -37,24 +39,24 @@ void Emulator::setEngineState(bool engineState) {
   // Change engine state (on/off) only when carSpeed is 0
   if (carSpeed == 0)
     this->engineState = engineState;
-  // Set D mode
+  // Set P mode
   setCurrentGear(2);
   // idle, even when off (default min)
   setCurrentRPM(idleRPM);
 }
 
 void Emulator::moveRearward() {
-  // Check if speed is 0t, engine is on and reverse gear
+  // Check if speed is 0, engine is on and reverse gear
   if (carSpeed == 0 && engineState && currentGear == 0) {
     carSpeed = abs(currentRPM * gearRatio[0]);
-    std::cout << "4 " << std::endl;
+    // std::cout << "4 " << std::endl;
   }
 
-  // Test printout
-  std::cout << "Move R: " << currentRPM * gearRatio[0] << "  " << carSpeed
-            << std::endl;
-  std::cout << "currentRPM: " << currentRPM << " gearRatio: " << gearRatio[0]
-            << std::endl;
+  // // Test printout
+  // std::cout << "Move R: " << currentRPM * gearRatio[0] << "  " << carSpeed
+  //           << std::endl;
+  // std::cout << "currentRPM: " << currentRPM << " gearRatio: " << gearRatio[0]
+  //           << std::endl;
 }
 
 void Emulator::moveForward() {
@@ -64,46 +66,52 @@ void Emulator::moveForward() {
   if (dGear == maxGear)
     upperLimit = 0;
 
-  std::cout << ((this->currentRPM > currentRPM) ? "True" : "False")
-            << std::endl;
-  std::cout << this->currentRPM << std::endl;
-  std::cout << currentRPM << std::endl;
-  std::cout << getCurrentRPM() << std::endl;
+  // std::cout << ((this->currentRPM > currentRPM) ? "True" : "False")
+  //           << std::endl;
+  // std::cout << this->currentRPM << std::endl;
+  // std::cout << currentRPM << std::endl;
+  // std::cout << getCurrentRPM() << std::endl;
 
   // Check if, engine is on and D gear
   if (engineState && currentGear == 3) {
-    std::cout << "\n000 " << std::endl;
-    std::cout << "\n000 " << std::endl;
-    // ShiftUp when RPM is 1500 rpm bellow the maxRPM
-    // and above 2000 rpm for all gears except the last one
-    if ((currentRPM > 2000) && (currentRPM == (maxRPM - upperLimit))) {
-      shiftUp();
-      // Set (decrease) RPM to 2000
-      currentRPM = 2000;
-      carSpeed = currentRPM * gearRatio[dGear];
-      std::cout << "\n111 " << std::endl;
-    } else if (currentRPM <= (maxRPM - 1500)) {
-      carSpeed = currentRPM * gearRatio[dGear];
-      std::cout << "\n222" << std::endl;
-      // If the RPM is bellow 1500 rpm, shiftDown
-      // and set (increase) RPM to 2000
-    } else if (currentRPM <= 1500) {
-      shiftDown();
-      currentRPM = 2000;
-      carSpeed = currentRPM * gearRatio[dGear];
-      std::cout << "\333 " << std::endl;
-    } else {
-      carSpeed = currentRPM * gearRatio[dGear];
-      std::cout << "\nDEF " << std::endl;
+    // std::cout << "\n000 " << std::endl;
+    if (pedalUp) {
+      // ShiftUp when above maxRPM - upperLimit rpm for all gears except the
+      // last one
+      if (currentRPM > (maxRPM - upperLimit)) &&
+          dGear < maxGear) {
+          shiftUp();
+          // Set (decrease) RPM to 2000 * factor
+          currentRPM = 2000 * (1 + dGear * dGear / 10);
+          carSpeed = currentRPM * gearRatio[dGear];
+          // std::cout << "\n1 " << std::endl;
+        }
+      else {
+        shiftUp();
+        // Set (decrease) RPM to 2000
+        currentRPM = 2000;
+        carSpeed = currentRPM * gearRatio[dGear];
+        // std::cout << "\n2 " << std::endl;
+      }
+    } else if (pedalDown) {
+      // ShiftDown when RPM is bellow 1500 rpm
+      if ((currentRPM < 1500) && dGear > 1) {
+        shiftDown();
+        // Set (increase) RPM to 3000
+        currentRPM = 3000;
+        carSpeed = currentRPM * gearRatio[dGear];
+        // std::cout << "\n3 " << std::endl;
+      }
     }
   }
 
   // Test printout
-  std::cout << "Move F: " << currentRPM * gearRatio[dGear] << "  " << carSpeed
-            << std::endl;
-  std::cout << "currentRPM: " << currentRPM
-            << " gearRatio: " << gearRatio[dGear] << " dGear: " << dGear
-            << std::endl;
+  // std::cout << "Move F: " << currentRPM * gearRatio[dGear] << "  " <<
+  // carSpeed
+  //           << std::endl;
+  // std::cout << "currentRPM: " << currentRPM
+  //           << " gearRatio: " << gearRatio[dGear] << " dGear: " << dGear
+  //           << std::endl;
   // return carSpeed;
 }
 
