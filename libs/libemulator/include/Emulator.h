@@ -7,7 +7,7 @@ public:
   const int idleRPM;        // idle RPM
   const int maxRPM;         // max RPM
   int currentRPM;           // RPM from the pedal position
-  float carSpeed;           // actual car speed
+  int carSpeed;             // actual car speed
   bool engineState;         // engineState as to whether it is on (1) or off (0)
   int currentGear;          /*
                             Input gear 0-3:

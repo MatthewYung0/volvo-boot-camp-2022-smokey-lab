@@ -1,98 +1,62 @@
 #include "Emulator.h"
 #include <iostream>
+//
+#include "canmessage.h"
+#include "checkinput.h"
+#include "socketcan_cpp.h"
+#include "socketcansetup.h"
+#include <curses.h>
+
+#include <chrono> // std::chrono::microseconds
+#include <thread>
 
 using namespace std;
 
 int main() {
+
+  scpp::SocketCan sockat_can;
+  InitSocketcan(sockat_can);
+  scpp::CanFrame fr;
+
   Emulator volvo;
+
   volvo.setEngineState(1);
-  cout << "carSpeed: " << volvo.getCarSpeed() << endl << endl;
-  volvo.setPedalD(1);
   volvo.setCurrentGear(3);
-  cout << "engineState: " << volvo.getEngineState() << endl;
-  cout << "currenRPM: " << volvo.getCurrentRPM() << endl;
-  cout << "carSpeed: " << volvo.getCarSpeed() << endl << endl;
-  volvo.moveForward();
-  cout << "engineState: " << volvo.getEngineState() << endl;
-  cout << "carSpeed: " << volvo.getCarSpeed() << endl;
-  cout << "DGear: " << volvo.getDGear() << endl;
-  volvo.setCurrentRPM(7000);
-  volvo.moveForward();
-  cout << "currenRPM: " << volvo.getCurrentRPM() << endl;
-  cout << "carSpeed: " << volvo.getCarSpeed() << endl;
-  cout << "DGear: " << volvo.getDGear() << endl;
-  volvo.setCurrentRPM(4000);
-  volvo.moveForward();
-  cout << "currenRPM: " << volvo.getCurrentRPM() << endl;
-  cout << "carSpeed: " << volvo.getCarSpeed() << endl;
-  cout << "DGear: " << volvo.getDGear() << endl;
-  volvo.setCurrentRPM(5000);
-  volvo.moveForward();
-  cout << "currenRPM: " << volvo.getCurrentRPM() << endl;
-  cout << "carSpeed: " << volvo.getCarSpeed() << endl;
-  cout << "DGear: " << volvo.getDGear() << endl;
-  volvo.setCurrentRPM(7500);
-  volvo.moveForward();
-  cout << "currenRPM: " << volvo.getCurrentRPM() << endl;
-  cout << "carSpeed: " << volvo.getCarSpeed() << endl;
-  cout << "DGear: " << volvo.getDGear() << endl;
-
-  // volvo.setCurrentRPM(700);
-  // cout << "currentRPM: " << volvo.getCurrentRPM() << endl << endl;
-  // volvo.moveForward();
-  // cout << "carSpeed R: " << volvo.getCarSpeed() << endl << endl;
-
-  // cout << "idleRPM: " << volvo.getIdleRPM() << endl;
-  // cout << "maxRPM: " << volvo.getMaxRPM() << endl << endl;
-
-  // cout << "MaxGear: " << volvo.getMaxGear() << endl;
-  // cout << "currentGear default: " << volvo.getCurrentGear() << endl;
   // volvo.setCurrentGear(0);
-  // volvo.setCurrentRPM(7000);
-  // cout << "currentGear to 0 (Reverse): " << volvo.getCurrentGear() << endl
-  //      << endl;
-  // volvo.moveRearward();
-  // cout << "currentRPM after R: " << volvo.getCurrentRPM() << endl;
-  // cout << "carSpeed R: " << volvo.getCarSpeed() << endl << endl;
+  // volvo.setPedalD(1);
+  volvo.setPedalU(1);
+  volvo.shiftUp();
+  volvo.shiftUp();
+  volvo.shiftUp();
+  volvo.shiftUp();
+  volvo.shiftUp();
 
-  // cout << "DGear: " << volvo.getDGear() << endl;
-  // volvo.shiftUp();
-  // volvo.shiftUp();
-  // cout << "DGear, ShiftUp 2: " << volvo.getDGear() << endl;
-  // volvo.shiftDown();
-  // cout << "DGear, ShiftDown 1: " << volvo.getDGear() << endl << endl;
-  // volvo.shiftUp();
-  // volvo.shiftUp();
-  // volvo.shiftUp();
-  // volvo.setCurrentRPM(6499);
-  // volvo.moveForward();
-  // cout << "carSpeed: " << volvo.getCarSpeed() << endl;
-  // volvo.shiftDown();
-  // volvo.moveForward();
-  // cout << "\nDGear, ShiftDown 1: " << volvo.getDGear() << endl << endl;
-  // cout << "carSpeed: " << volvo.getCarSpeed() << endl;
-  // volvo.shiftDown();
-  // volvo.moveForward();
-  // cout << "\nDGear, ShiftDown 1: " << volvo.getDGear() << endl << endl;
-  // cout << "carSpeed: " << volvo.getCarSpeed() << endl;
-  // volvo.shiftDown();
-  // volvo.moveForward();
-  // cout << "\nDGear, ShiftDown 1: " << volvo.getDGear() << endl << endl;
-  // cout << "carSpeed: " << volvo.getCarSpeed() << endl;
-  // volvo.shiftDown();
-  // volvo.moveForward();
-  // cout << "\nDGear, ShiftDown 1: " << volvo.getDGear() << endl << endl;
-  // cout << "carSpeed: " << volvo.getCarSpeed() << endl;
-  // cout << "#################################" << endl;
-  // volvo.setCurrentRPM(7500);
-  // volvo.moveForward();
-  // cout << "#################################" << endl;
-  // volvo.setCurrentRPM(2000);
-  // volvo.moveForward();
-  // cout << "#################################" << endl;
-  // volvo.setCurrentRPM(4000);
-  // volvo.moveForward();
-  // cout << "#################################" << endl;
-  // volvo.setCurrentRPM(6000);
-  // volvo.moveForward();
+  // int i = 1000;
+  int i = 7000;
+  int dg = volvo.getDGear();
+
+  while (true) {
+
+    std::this_thread::sleep_for(1000ms);
+    // ReadMessage(sockat_can, fr);
+    /*
+    cout << int(fr.data[0]) << " " << int(fr.data[1]) << " " << int(fr.data[2])
+         << " " << int(fr.data[3]) << " " << int(fr.data[4]) << " "
+         << int(fr.data[5]) << " " << int(fr.data[6]) << " " << int(fr.data[7])
+         << endl;
+         */
+    volvo.moveForward();
+    // volvo.moveRearward();
+    if (dg < volvo.getDGear()) {
+      cout << "DGear In IF : " << volvo.getDGear() << endl;
+      dg = volvo.getDGear();
+      i = volvo.getCurrentRPM();
+    }
+    cout << "currenRPM: " << volvo.getCurrentRPM() << endl;
+    cout << "carSpeed: " << volvo.getCarSpeed() << endl;
+    cout << "DGear: " << volvo.getDGear() << endl;
+    volvo.setCurrentRPM(i);
+    // i += 1000;
+    i -= 5000;
+  }
 }

@@ -52,15 +52,8 @@ void Emulator::setEngineState(bool engineState) {
 void Emulator::moveRearward() {
   // Check if speed is 0, engine is on and reverse gear
   if (carSpeed == 0 && engineState && currentGear == 0) {
-    carSpeed = abs(currentRPM * gearRatio[0]);
-    // std::cout << "4 " << std::endl;
+    setCarSpeed(abs(currentRPM * gearRatio[0]));
   }
-
-  // // Test printout
-  // std::cout << "Move R: " << currentRPM * gearRatio[0] << "  " << carSpeed
-  //           << std::endl;
-  // std::cout << "currentRPM: " << currentRPM << " gearRatio: " << gearRatio[0]
-  //           << std::endl;
 }
 
 void Emulator::moveForward() {
@@ -70,53 +63,30 @@ void Emulator::moveForward() {
   if (dGear == maxGear)
     upperLimit = 0;
 
-  // std::cout << ((this->currentRPM > currentRPM) ? "True" : "False")
-  //           << std::endl;
-  // std::cout << this->currentRPM << std::endl;
-  // std::cout << currentRPM << std::endl;
-  // std::cout << getCurrentRPM() << std::endl;
-  // std::cout << "\nTEST " << std::endl;
-
   // Check if, engine is on and D gear
   if (engineState && currentGear == 3) {
-    // std::cout << "\n000 " << std::endl;
     if (pedalDown) {
-      // std::cout << "\nPedalD " << std::endl;
       // ShiftUp when above maxRPM - upperLimit rpm for all gears except the
       // last one
       if (currentRPM > (maxRPM - upperLimit) && (dGear < maxGear)) {
         shiftUp();
-        // Set (decrease) RPM to 2000 * factor
-        currentRPM = 2000 * (1 + dGear * dGear / 10);
-        carSpeed = currentRPM * gearRatio[dGear];
-        // std::cout << "\n1 " << std::endl;
+        setCurrentRPM(2000); // * (1 + dGear * dGear / 10);
+        setCarSpeed(currentRPM * gearRatio[dGear]);
       } else {
-        shiftUp();
-        // Set (decrease) RPM to 2000
-        currentRPM = 2000;
-        carSpeed = currentRPM * gearRatio[dGear];
-        // std::cout << "\n2 " << std::endl;
+        setCarSpeed(currentRPM * gearRatio[dGear]);
       }
     } else if (pedalUp) {
       // ShiftDown when RPM is bellow 1500 rpm
       if ((currentRPM < 1500) && dGear > 1) {
         shiftDown();
         // Set (increase) RPM to 3000
-        currentRPM = 3000;
-        carSpeed = currentRPM * gearRatio[dGear];
-        // std::cout << "\n3 " << std::endl;
+        setCurrentRPM(3000);
+        setCarSpeed(currentRPM * gearRatio[dGear]);
+      } else {
+        setCarSpeed(currentRPM * gearRatio[dGear]);
       }
     }
   }
-
-  // Test printout
-  // std::cout << "Move F: " << currentRPM * gearRatio[dGear] << "  " <<
-  // carSpeed
-  //           << std::endl;
-  // std::cout << "currentRPM: " << currentRPM
-  //           << " gearRatio: " << gearRatio[dGear] << " dGear: " << dGear
-  //           << std::endl;
-  // return carSpeed;
 }
 
 //********************************************************
@@ -145,7 +115,13 @@ int Emulator::getDGear() const { return dGear; };
 
 float Emulator::getCarSpeed() const { return carSpeed; };
 
-void Emulator::setCarSpeed(float carSpeed) { this->carSpeed = carSpeed; };
+void Emulator::setCarSpeed(float carSpeed) {
+  if (carSpeed < 0)
+    carSpeed = 0;
+  else if (carSpeed > 250)
+    carSpeed = 250;
+  this->carSpeed = carSpeed;
+};
 
 void Emulator::shiftUp() {
   // Check if D gear is inside interval 1-6
