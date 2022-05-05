@@ -75,13 +75,13 @@ void Emulator::moveForward() {
   // std::cout << this->currentRPM << std::endl;
   // std::cout << currentRPM << std::endl;
   // std::cout << getCurrentRPM() << std::endl;
-  std::cout << "\nTEST " << std::endl;
+  // std::cout << "\nTEST " << std::endl;
 
   // Check if, engine is on and D gear
   if (engineState && currentGear == 3) {
-    std::cout << "\n000 " << std::endl;
+    // std::cout << "\n000 " << std::endl;
     if (pedalDown) {
-      std::cout << "\nPedalD " << std::endl;
+      // std::cout << "\nPedalD " << std::endl;
       // ShiftUp when above maxRPM - upperLimit rpm for all gears except the
       // last one
       if (currentRPM > (maxRPM - upperLimit) && (dGear < maxGear)) {
