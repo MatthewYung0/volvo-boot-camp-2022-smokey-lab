@@ -20,8 +20,7 @@ public:
   const int maxGear;        // Number of gears in D-mode
   const float gearRatio[7]; // Define gear ration, position 0 is for Reverse
   bool pedalDown;           // Input, pedal position for increasing RPM
-  bool pedalUpp;            // Input, pedal position for decreasing RPM
-  bool pedal;               // Pedal for gear shifting
+  bool pedalUp;             // Input, pedal position for decreasing RPM
 
   Emulator();
   // Emulator(int, int, int, float, bool, int, int, int, float, float);
@@ -41,8 +40,10 @@ public:
   float getCarSpeed() const;
   void setCarSpeed(float);
 
-  void setPedal();
-  bool getPedal() const;
+  void setPedalU(bool);
+  // bool getPedalU() const;
+  void setPedalD(bool);
+  // bool getPedalD() const;
 
   //********************************************************
   // GearBox
