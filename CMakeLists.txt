@@ -1,10 +1,14 @@
-# https://codevion.github.io/#!cpp/cmake.md
-
 cmake_minimum_required(VERSION 3.10)
-set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 project(eg_simulator VERSION 1.0)
 
-add_subdirectory(lib/libcanreadwrite)
-add_subdirectory(lib/libinputhandler)
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+add_compile_options(-Wall -Wextra -Wpedantic)
+
+add_subdirectory(libs)
+add_subdirectory(external/socketcan-cpp-master)
+
+file(TO_CMAKE_PATH "${PROJECT_BINARY_DIR}/libs/CMakeLists.txt" LOC_PATH)
+file(TO_CMAKE_PATH "${PROJECT_BINARY_DIR}/libs/libcanreadwrite/CMakeLists.txt" LOC_PATH)
+file(TO_CMAKE_PATH "${PROJECT_BINARY_DIR}/external/socketcan-cpp-master/CMakeLists.txt" LOC_PATH)

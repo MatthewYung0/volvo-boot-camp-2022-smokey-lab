@@ -1,5 +1,5 @@
 #pragma once
-#include "socketcan.h"
+#include "socketcan_cpp.h"
 #include "canmessage.h"
 
 void InitSocketcan(scpp::SocketCan &sockat_can);

@@ -1,4 +1,4 @@
-#include "checkInput.h"
+#include "checkinput.h"
 
 // Function to check if the user input is valid.
 // Returns -1 if invalid, otherwise returns non -1 value.

@@ -1,5 +1,5 @@
 #pragma once
-#include "socketcan.h"
+#include "socketcan_cpp.h"
 
 class CanMessage {
     public:
