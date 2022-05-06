@@ -23,28 +23,23 @@ int main() {
   volvo.setEngineState(1);
   volvo.setCurrentGear(3);
   // volvo.setCurrentGear(0);
-  // volvo.setPedalD(1);
-  volvo.setPedalU(1);
-  volvo.shiftUp();
-  volvo.shiftUp();
-  volvo.shiftUp();
-  volvo.shiftUp();
-  volvo.shiftUp();
+  volvo.setPedalD(1);
+  // volvo.setPedalU(1);
+  // volvo.shiftUp();
+  // volvo.shiftUp();
+  // volvo.shiftUp();
+  // volvo.shiftUp();
+  // volvo.shiftUp();
 
-  // int i = 1000;
-  int i = 7000;
+  int i = 1000;
+  // int i = 7000;
   int dg = volvo.getDGear();
 
   while (true) {
 
-    std::this_thread::sleep_for(1000ms);
+    std::this_thread::sleep_for(300ms);
     // ReadMessage(sockat_can, fr);
-    /*
-    cout << int(fr.data[0]) << " " << int(fr.data[1]) << " " << int(fr.data[2])
-         << " " << int(fr.data[3]) << " " << int(fr.data[4]) << " "
-         << int(fr.data[5]) << " " << int(fr.data[6]) << " " << int(fr.data[7])
-         << endl;
-         */
+
     volvo.moveForward();
     // volvo.moveRearward();
     if (dg < volvo.getDGear()) {
@@ -56,7 +51,14 @@ int main() {
     cout << "carSpeed: " << volvo.getCarSpeed() << endl;
     cout << "DGear: " << volvo.getDGear() << endl;
     volvo.setCurrentRPM(i);
-    // i += 1000;
-    i -= 5000;
+    i += 1000;
+    // i -= 5000;
   }
+
+  /*
+   cout << int(fr.data[0]) << " " << int(fr.data[1]) << " " << int(fr.data[2])
+        << " " << int(fr.data[3]) << " " << int(fr.data[4]) << " "
+        << int(fr.data[5]) << " " << int(fr.data[6]) << " " << int(fr.data[7])
+        << endl;
+        */
 }
