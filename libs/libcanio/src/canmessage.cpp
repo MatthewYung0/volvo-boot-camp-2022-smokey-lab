@@ -17,7 +17,7 @@ CanMessage::CanMessage() {
     this->frame.id = 0xEC;
     this->frame.len = 8;
     this->frame.flags = 0;
-    for (int i = 0; i < 8; ++i) {
+    for (int i = 0; i < 8; i++) {
         this->frame.data[i] = 0;
     }
 }
@@ -26,31 +26,32 @@ scpp::CanFrame CanMessage::GetFrame() {
     return this->frame;
 }
 
+void CanMessage::ResetFrame() {
+    for (int i = 0; i < 8; i++) {
+        this->frame.data[i] = 0;
+    }
+}
 void CanMessage::SetIgnition() {
-    this->ignition_state = !(this->ignition_state);
-    this->frame.data[IGNITION] = this->ignition_state;
+    this->frame.data[IGNITION] = 1;
 }
 void CanMessage::SetGearNeutral() {
     this->frame.data[GEAR] = 0;
 }
 void CanMessage::SetGearPark() {
-    this->frame.data[GEAR] = 1;
-}
-void CanMessage::SetGearDrive() {
-    this->frame.data[GEAR] = 8;
-}
-void CanMessage::SetGearRear() {
     this->frame.data[GEAR] = 2;
 }
+void CanMessage::SetGearDrive() {
+    this->frame.data[GEAR] = 3;
+}
+void CanMessage::SetGearRear() {
+    this->frame.data[GEAR] = 1;
+}
 void CanMessage::SetPedalPosUp() {
-    if (this->frame.data[PEDAL_POS] >= 10)
-        this->frame.data[PEDAL_POS] -= 10;
+    this->frame.data[PEDAL_POS] = 1;
 }
 void CanMessage::SetPedalPosDown() {
-    if (this->frame.data[PEDAL_POS] <= 90)
-        this->frame.data[PEDAL_POS] += 10;
+    this->frame.data[PEDAL_POS] = 2;
 }
-
 void CanMessage::SetPedalPos(int _pedal_pos) {
     this->frame.data[PEDAL_POS] = _pedal_pos;
 }
