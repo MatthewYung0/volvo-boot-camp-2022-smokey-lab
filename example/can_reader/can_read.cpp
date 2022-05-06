@@ -1,6 +1,5 @@
 #include <curses.h>
 #include <iostream>
-#include "checkinput.h"
 #include "socketcan_cpp.h"
 #include "canmessage.h"
 #include "socketcansetup.h"
