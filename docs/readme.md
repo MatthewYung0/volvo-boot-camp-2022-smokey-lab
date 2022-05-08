@@ -38,6 +38,6 @@ An example:
 5) The current state of the Emulator will be read by the Message Handler (e.g. RPM, speed, gear).
 6) The Message Handler will output this information in a CAN message to the Message Output.
 
-![Project_Deliverables](https://github.com/MatthewYung0/volvo-boot-camp-2022-smokey-lab/blob/master/docs/frame_emulator.png)
-
 # Message Output
+
+![Project_Deliverables](https://github.com/MatthewYung0/volvo-boot-camp-2022-smokey-lab/blob/master/docs/frame_emulator.png)
