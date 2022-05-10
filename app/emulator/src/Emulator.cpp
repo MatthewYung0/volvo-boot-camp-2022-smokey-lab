@@ -13,10 +13,10 @@ Emulator::Emulator()
   dGear = 1;
   pedal = 0;
   pedalInput = 0;
-};
+}
 
 // Emulator() = default;
-Emulator::~Emulator(){};
+Emulator::~Emulator() {}
 
 int Emulator::getIdleRPM() const { return idleRPM; }
 int Emulator::getMaxRPM() const { return maxRPM; }
@@ -33,16 +33,17 @@ void Emulator::setCurrentRPM(int pedalInput) {
   std::cout << (pedal ? "PedalDown" : "PedalUp") << std::endl;
 
   // Check if engine is on and R, N or D gear
-  if (engineState && !(gearInput == 2)) {
+  if (engineState && !(gearInput == PARK)) {
     // Check if RPM is inside the range
     if (currentRPM < idleRPM)
       this->currentRPM = idleRPM;
     else if (currentRPM > maxRPM)
       this->currentRPM = maxRPM;
     else {
-      this->currentRPM = previousPedalInput * rpmRange / 100;
-      // std::cout << "rpm based on pedal:  "
-      //           << previousPedalInput * rpmRange / 100 << std::endl;
+      if (pedalInput == 0)
+        this->currentRPM = idleRPM;
+      else
+        this->currentRPM = pedalInput * rpmRange / 100;
     }
 
     // Store
@@ -57,26 +58,26 @@ void Emulator::setCurrentRPM(int pedalInput) {
 
 void Emulator::setEngineState(int engineStateInput) {
   // Change engine state (on/off) only when carSpeed is 0
-  if (carSpeed == 0 && engineStateInput == 1) {
+  if (carSpeed <= 5 && engineStateInput == 1) {
     this->engineState = true;
     if (currentRPM < idleRPM) {
       // Set idle RPM if engine is started
       currentRPM = idleRPM;
     }
-  } else if (carSpeed == 0 && engineStateInput == 0) {
+  } else if (carSpeed <= 5 && engineStateInput == 0) {
     this->engineState = false;
     // If engine is off
     currentRPM = 0;
   }
 
   // Set P mode, it always should be D when the engine is turned on or off
-  setCurrentGear(2);
+  setCurrentGear(PARK);
 }
 
 void Emulator::moveRearward() {
   // Check if speed is 0, engine is on and reverse gear
   // if (carSpeed == 0 && engineState && gearInput == 0) {
-  if (engineState && gearInput == 0) {
+  if (engineState && gearInput == REVERSE) {
     carSpeed = abs(currentRPM * gearRatio[0]);
   }
 }
@@ -89,7 +90,7 @@ void Emulator::moveForward() {
     upperLimit = 0;
 
   // Check if, engine is on and D gear
-  if (engineState && gearInput == 3) {
+  if (engineState && gearInput == DRIVE) {
     if (pedal) {
       // ShiftUp when above maxRPM - upperLimit rpm for all gears except the
       // last one
@@ -122,7 +123,7 @@ void Emulator::moveForward() {
 //********************************************************
 // GearBox
 
-int Emulator::getMaxGear() const { return maxGear; };
+int Emulator::getMaxGear() const { return maxGear; }
 
 bool Emulator::checkGear(int gearInput) {
   // Check if user input is correct
@@ -133,18 +134,18 @@ int Emulator::getCurrentGear() const { return gearInput; }
 
 // Set User input Gear, R, N, P or D and check if carSpeed is 0
 void Emulator::setCurrentGear(int gearInput) {
-  if (checkGear(gearInput) && (carSpeed == 0)) {
+  if (checkGear(gearInput) && (carSpeed <= 5)) {
     this->gearInput = gearInput;
     dGear = 1;
   }
 }
 
 // Set D mode gear
-void Emulator::setDGear() { dGear = 1; };
+void Emulator::setDGear() { dGear = 1; }
 
-int Emulator::getDGear() const { return dGear; };
+int Emulator::getDGear() const { return dGear; }
 
-float Emulator::getCarSpeed() const { return carSpeed; };
+float Emulator::getCarSpeed() const { return carSpeed; }
 
 void Emulator::setCarSpeed(float carSpeed) {
   // limit car speed to interval 0-250
@@ -154,7 +155,7 @@ void Emulator::setCarSpeed(float carSpeed) {
     carSpeed = 250;
 
   this->carSpeed = carSpeed;
-};
+}
 
 void Emulator::shiftUp() {
   // Check if D gear is inside interval 1-6
