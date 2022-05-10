@@ -15,3 +15,10 @@ cmake ..
 echo "run cmake"
 make
 echo "run make"
+
+# add terminal you use if you dont have
+# mate-terminal
+cd app/emulator/ && mate-terminal&
+echo "open emulator terminal"
+cd app/input_handler/ && mate-terminal&
+echo "open input_handler terminal"
