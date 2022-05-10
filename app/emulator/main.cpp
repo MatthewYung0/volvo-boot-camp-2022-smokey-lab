@@ -10,7 +10,8 @@
 
 using namespace std;
 
-int main() {
+int main()
+{
 
   scpp::SocketCan sockat_can;
   InitSocketcan(sockat_can);
@@ -24,7 +25,8 @@ int main() {
   // volvo.setCurrentRPM(3000);
   // cout << "currenRPM: " << volvo.getCurrentRPM() << endl;
 
-  while (true) {
+  while (true)
+  {
 
     std::this_thread::sleep_for(500ms);
     ReadMessage(sockat_can, fr);
@@ -32,44 +34,50 @@ int main() {
     // cout << "engCAN: " << hex << fr.data[0] << "  " << int(fr.data[0]) <<
     // endl;
     // temp = fr.data[0];
-    volvo.setEngineState(fr.data[0]);
-    volvo.setCurrentGear(fr.data[1]);
+    if (fr.id == 0xAAA)
+    {
+      volvo.setEngineState(fr.data[0]);
+      volvo.setCurrentGear(fr.data[1]);
 
-    if (fr.data[1] == 3) {
-      volvo.moveForward();
-      cout << "Move Forward" << endl;
-    } else if (fr.data[1] == 0) {
-      volvo.moveRearward();
-      cout << "Move Rearward" << endl;
+      if (fr.data[1] == 3)
+      {
+        volvo.moveForward();
+        cout << "Move Forward" << endl;
+      }
+      else if (fr.data[1] == 0)
+      {
+        volvo.moveRearward();
+        cout << "Move Rearward" << endl;
+      }
+      if (fr.data[2] == 0)
+        temp = 0;
+      else if (fr.data[2] == 1)
+        temp = 10;
+      else if (fr.data[2] == 2)
+        temp = 20;
+      else if (fr.data[2] == 3)
+        temp = 30;
+      else if (fr.data[2] == 4)
+        temp = 40;
+      else if (fr.data[2] == 5)
+        temp = 50;
+      else if (fr.data[2] == 6)
+        temp = 60;
+      else if (fr.data[2] == 7)
+        temp = 70;
+      else if (fr.data[2] == 8)
+        temp = 80;
+      else if (fr.data[2] == 9)
+        temp = 90;
+
+      volvo.setCurrentRPM(temp);
+      cout << "--------------------------" << endl;
+      cout << "currenRPM: " << volvo.getCurrentRPM() << endl;
+      cout << "carSpeed: " << volvo.getCarSpeed() << endl;
+      cout << "DGear: " << volvo.getDGear() << endl;
+      cout << "InputGear: " << volvo.getCurrentGear() << endl;
+      cout << "--------------------------" << endl;
     }
-    if (fr.data[2] == 0)
-      temp = 0;
-    else if (fr.data[2] == 1)
-      temp = 10;
-    else if (fr.data[2] == 2)
-      temp = 20;
-    else if (fr.data[2] == 3)
-      temp = 30;
-    else if (fr.data[2] == 4)
-      temp = 40;
-    else if (fr.data[2] == 5)
-      temp = 50;
-    else if (fr.data[2] == 6)
-      temp = 60;
-    else if (fr.data[2] == 7)
-      temp = 70;
-    else if (fr.data[2] == 8)
-      temp = 80;
-    else if (fr.data[2] == 9)
-      temp = 90;
-
-    volvo.setCurrentRPM(temp);
-    cout << "--------------------------" << endl;
-    cout << "currenRPM: " << volvo.getCurrentRPM() << endl;
-    cout << "carSpeed: " << volvo.getCarSpeed() << endl;
-    cout << "DGear: " << volvo.getDGear() << endl;
-    cout << "InputGear: " << volvo.getCurrentGear() << endl;
-    cout << "--------------------------" << endl;
   }
 
   /*

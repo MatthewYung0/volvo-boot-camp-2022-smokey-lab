@@ -12,3 +12,5 @@ target_include_directories(emulator PUBLIC include)
 
 target_link_libraries(emulator PUBLIC libcanio)
 
+target_include_directories(emulator PUBLIC libuserinputcheck)
+

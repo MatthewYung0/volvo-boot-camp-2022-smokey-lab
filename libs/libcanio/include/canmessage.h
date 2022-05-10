@@ -6,7 +6,6 @@ class CanMessage {
         CanMessage();
         void SetFrame(int _input);
         void SetIgnition();
-        // scpp::CanFrame GetFrame();
         scpp::CanFrame frame;
     private:
         bool ignition_state{};

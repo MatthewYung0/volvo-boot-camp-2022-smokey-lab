@@ -11,6 +11,8 @@ add_executable(input_handler main.cpp ${SRC_FILES})
 
 target_include_directories(input_handler PUBLIC include)
 
+target_include_directories(libcanio PUBLIC libuserinputcheck)
+
 find_package(Curses REQUIRED)
 
 target_link_libraries(input_handler PUBLIC ${CURSES_LIBRARIES})

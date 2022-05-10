@@ -100,21 +100,6 @@ namespace scpp
 
         }
 
-        //const int timestamping_flags = (SOF_TIMESTAMPING_SOFTWARE | \
-        //    SOF_TIMESTAMPING_RX_SOFTWARE | \
-        //    SOF_TIMESTAMPING_RAW_HARDWARE);
-
-        //if (setsockopt(m_socket, SOL_SOCKET, SO_TIMESTAMPING,
-        //    &timestamping_flags, sizeof(timestamping_flags)) < 0) {
-        //    perror("setsockopt SO_TIMESTAMPING is not supported by your Linux kernel");
-        //}
-
-        ///* disable default receive filter on this RAW socket */
-        ///* This is obsolete as we do not read from the socket at all, but for */
-        ///* this reason we can remove the receive list in the Kernel to save a */
-        ///* little (really a very little!) CPU usage.                          */
-        //setsockopt(s, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
-
 // LINUX
         struct timeval tv;
         tv.tv_sec = 0;  /* 30 Secs Timeout */
