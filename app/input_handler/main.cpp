@@ -6,7 +6,6 @@
 #include "socketcansetup.h"
 
 
-
 int main()
 {
     initscr();
@@ -24,14 +23,12 @@ int main()
     while (true)
     {
         if ((ch = getch()) == ERR) {}
-
-        else if (checkInput(ch) != -1) {
-            can_msg.SetFrame(ch);
-        } else std::cout << "Invalid input!" << std::endl;
-        
+        can_msg.SetFrame(ch);
         SendMessage(sockat_can, can_msg.frame);
 
     }
+
     endwin();
+
     return 0;
 }

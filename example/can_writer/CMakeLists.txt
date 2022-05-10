@@ -11,5 +11,3 @@ add_executable(can_writer can_write.cpp ${SRC_FILES})
 target_link_libraries(can_writer PUBLIC libcanio)
 
 target_link_libraries(can_writer PUBLIC libcanio)
-
-target_link_libraries(can_writer PUBLIC libuserinput)

@@ -3,7 +3,6 @@
 #include "socketcan_cpp.h"
 #include "canmessage.h"
 #include <curses.h>
-#include "checkinput.h"
 
 
 int main () {
