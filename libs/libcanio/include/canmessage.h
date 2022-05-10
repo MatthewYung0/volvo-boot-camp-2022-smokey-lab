@@ -5,12 +5,12 @@ class CanMessage {
     public:
         CanMessage();
         void SetFrame(int _input);
-        void ResetFrame();
-        scpp::CanFrame GetFrame();
-    private:
-        scpp::CanFrame frame;
-
         void SetIgnition();
+        // scpp::CanFrame GetFrame();
+        scpp::CanFrame frame;
+    private:
+        bool ignition_state{};
+
         void SetGearDrive();
         void SetGearRear();
         void SetGearNeutral();
