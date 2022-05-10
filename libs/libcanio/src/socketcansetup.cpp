@@ -10,8 +10,8 @@ void InitSocketcan(scpp::SocketCan &sockat_can) {
     }
 }
 
-void SendMessage(scpp::SocketCan &sockat_can, CanMessage &can_msg) {
-    auto write_sc_status = sockat_can.write(can_msg.GetFrame());
+void SendMessage(scpp::SocketCan &sockat_can, scpp::CanFrame &fr) {
+    auto write_sc_status = sockat_can.write(fr);
     if (write_sc_status != scpp::STATUS_OK)
         printf("something went wrong on socket write, error code : %d \n", int32_t(write_sc_status));
     else

@@ -3,5 +3,5 @@
 #include "canmessage.h"
 
 void InitSocketcan(scpp::SocketCan &sockat_can);
-void SendMessage(scpp::SocketCan &sockat_can, CanMessage &can_msg);
+void SendMessage(scpp::SocketCan &sockat_can, scpp::CanFrame &fr);
 void ReadMessage(scpp::SocketCan &sockat_can, scpp::CanFrame &fr);

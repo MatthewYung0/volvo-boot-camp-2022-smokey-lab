@@ -1,3 +1,2 @@
 add_subdirectory(libcanio)
-add_subdirectory(libuserinput)
 add_subdirectory(libemulator)

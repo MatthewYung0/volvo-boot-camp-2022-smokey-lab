@@ -6,12 +6,16 @@ project(input_handler VERSION 1.0)
 
 file(GLOB_RECURSE SRC_FILES src/*.cpp)
 
-add_executable(input_handler input_handler.cpp ${SRC_FILES})
+
+add_executable(input_handler main.cpp ${SRC_FILES})
+
+target_include_directories(input_handler PUBLIC include)
 
 find_package(Curses REQUIRED)
 
+target_link_libraries(input_handler PUBLIC ${CURSES_LIBRARIES})
+
 target_link_libraries(input_handler PUBLIC libcanio)
 
-target_link_libraries(input_handler PUBLIC libuserinput)
+target_link_libraries(input_handler PUBLIC socketcanexternallib)
 
-target_link_libraries(input_handler PUBLIC ${CURSES_LIBRARIES})

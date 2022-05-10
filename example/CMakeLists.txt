@@ -1,4 +1,3 @@
 add_subdirectory(can_reader)
 add_subdirectory(can_writer)
 add_subdirectory(emulator)
-add_subdirectory(input_handler)

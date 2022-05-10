@@ -14,7 +14,7 @@ enum UserInput {
 };
 
 CanMessage::CanMessage() {
-    this->frame.id = 0xEC;
+    this->frame.id = 0xAAA;
     this->frame.len = 8;
     this->frame.flags = 0;
     for (int i = 0; i < 8; i++) {
@@ -22,17 +22,13 @@ CanMessage::CanMessage() {
     }
 }
 
-scpp::CanFrame CanMessage::GetFrame() {
-    return this->frame;
-}
+// scpp::CanFrame CanMessage::GetFrame() {
+//     return this->frame;
+// }
 
-void CanMessage::ResetFrame() {
-    for (int i = 0; i < 8; i++) {
-        this->frame.data[i] = 0;
-    }
-}
 void CanMessage::SetIgnition() {
-    this->frame.data[IGNITION] = 1;
+    this->ignition_state = !(this->ignition_state);
+    this->frame.data[IGNITION] = this->ignition_state;
 }
 void CanMessage::SetGearNeutral() {
     this->frame.data[GEAR] = 0;
