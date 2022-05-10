@@ -1,5 +1,10 @@
 #pragma once
 
+#define PARK 0
+#define REVERSE 1
+#define NEUTRAL 2
+#define DRIVE 3
+
 #include <iostream>
 
 class Emulator {
@@ -13,9 +18,9 @@ public:
   bool engineState;         // engineState true/false
   int gearInput;            /*
                               Input gear 0-3:
-                               -> 0: gear for reverse
-                               -> 1: gear for neutral
-                               -> 2: gear for park
+                               -> 0: gear for park
+                               -> 1: gear for reverse
+                               -> 2: gear for neutral
                                -> 3: gear for drive
                               */
   int dGear;                // Drive mode gear 1-5
