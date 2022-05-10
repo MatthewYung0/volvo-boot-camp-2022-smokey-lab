@@ -14,4 +14,25 @@
 #define THROTTLE_80 56
 #define THROTTLE_90 57
 
+#define INPUT_HANDLER_FRAME_ID 0xAAA
+
 #define APPLICATION_ON_OFF
+
+namespace canData {
+    enum DataElement {
+        ignition = 0,
+        gear = 1,
+        pedal_pos = 2
+     };
+}
+
+namespace gearLever {
+    enum gear {
+        park = 0,
+        rear = 1,
+        neutral = 2,
+        drive = 3
+     };
+}
+
+

@@ -1,2 +1,1 @@
 add_subdirectory(libcanio)
-add_subdirectory(libuserinputcheck)

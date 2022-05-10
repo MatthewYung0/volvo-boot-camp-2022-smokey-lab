@@ -11,3 +11,5 @@ add_library(libcanio STATIC src/canmessage.cpp src/socketcansetup.cpp)
 target_link_libraries(libcanio PUBLIC socketcanexternallib)
 
 target_include_directories(libcanio PUBLIC include)
+
+target_include_directories(libcanio PUBLIC ../libuserinputcheck)
