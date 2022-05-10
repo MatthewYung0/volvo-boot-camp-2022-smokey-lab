@@ -15,6 +15,8 @@ The minimum project requirements are:
 
 SocketCAN was installed and used to simulate the CAN environment
 
+### Use Case Table
+
 
 
 # Input Handler
