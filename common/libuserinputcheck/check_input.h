@@ -5,7 +5,13 @@ namespace user_frame_data_partition {
 static const uint8_t IGNITION = 0;
 static const uint8_t LEVER = 1;
 static const uint8_t PEDAL_POS = 2;
-} // namespace frame_data_partition
+} // namespace user_frame_data_partition
+
+namespace engine_frame_data_partition {
+static const uint8_t VELOCITY = 0;
+static const uint8_t RPM = 1;
+static const uint8_t GEAR = 2;
+} // namespace engine_frame_data_partition
 
 namespace gear_lever {
 static const uint8_t PARK = 0;
