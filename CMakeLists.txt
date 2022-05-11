@@ -7,7 +7,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_compile_options(-Wall -Wextra -Wpedantic)
 
 add_subdirectory(libs)
-add_subdirectory(external/socketcan-cpp-master)
 add_subdirectory(example)
 add_subdirectory(app)
 

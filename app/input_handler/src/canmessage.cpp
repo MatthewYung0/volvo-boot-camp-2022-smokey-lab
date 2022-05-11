@@ -1,6 +1,6 @@
+#include <iostream>
 #include "canmessage.h"
 #include "check_input.h"
-#include <iostream>
 
 CanMessage::CanMessage() {
   this->frame.id = INPUT_HANDLER_FRAME_ID;

@@ -12,6 +12,8 @@ add_executable(emulator main.cpp ${SRC_FILES})
 
 target_include_directories(emulator PUBLIC include)
 
+target_include_directories(input_handler PUBLIC ../../common/libuserinputcheck)
+
 target_link_libraries(emulator PUBLIC libcanio)
 
 target_include_directories(emulator PUBLIC libuserinputcheck)

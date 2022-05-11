@@ -1,8 +1,7 @@
 
 #include "Emulator.h"
 #include <iostream>
-//
-#include "canmessage.h"
+
 #include "socketcan_cpp.h"
 #include "socketcansetup.h"
 
