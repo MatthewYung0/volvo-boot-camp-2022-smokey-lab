@@ -1,9 +1,9 @@
-#include <iostream>
 #include "canmessage.h"
 #include "check_input.h"
+#include <iostream>
 
 CanMessage::CanMessage() {
-  this->frame.id = INPUT_HANDLER_FRAME_ID;
+  this->frame.id = USER_FRAME_ID;
   this->frame.len = 8;
   this->frame.flags = 0;
   for (int i = 0; i < 8; i++) {
@@ -13,22 +13,22 @@ CanMessage::CanMessage() {
 
 void CanMessage::SetIgnition() {
   this->ignition_state = !(this->ignition_state);
-  this->frame.data[canData::DataElement::ignition] = this->ignition_state;
+  this->frame.data[user_frame_data_partition::IGNITION] = this->ignition_state;
 }
 void CanMessage::SetGearPark() {
-  this->frame.data[gearLever::gear::park] = GEAR_PARK;
+  this->frame.data[user_frame_data_partition::LEVER] = gear_lever::PARK;
 }
 void CanMessage::SetGearRear() {
-  this->frame.data[gearLever::gear::rear] = GEAR_REAR;
+  this->frame.data[user_frame_data_partition::LEVER] = gear_lever::REAR;
 }
 void CanMessage::SetGearNeutral() {
-  this->frame.data[gearLever::gear::neutral] = GEAR_NEUTRAL;
+  this->frame.data[user_frame_data_partition::LEVER] = gear_lever::NEUTRAL;
 }
 void CanMessage::SetGearDrive() {
-  this->frame.data[gearLever::gear::drive] = GEAR_DRIVE;
+  this->frame.data[user_frame_data_partition::LEVER] = gear_lever::DRIVE;
 }
 void CanMessage::SetPedalPos(int _pedal_pos) {
-  this->frame.data[canData::DataElement::pedal_pos] = _pedal_pos;
+  this->frame.data[user_frame_data_partition::PEDAL_POS] = _pedal_pos;
 }
 
 void CanMessage::SetFrame(int _input) {
