@@ -6,7 +6,7 @@ file(GLOB_RECURSE SRC_FILES src/*.cpp)
 
 project(libcanio VERSION 1.0)
 
-add_library(libcanio STATIC src/canmessage.cpp src/socketcansetup.cpp)
+add_library(libcanio STATIC src/socketcansetup.cpp)
 
 target_link_libraries(libcanio PUBLIC socketcanexternallib)
 

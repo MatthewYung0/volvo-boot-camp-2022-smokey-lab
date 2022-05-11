@@ -7,4 +7,5 @@ project(SocketCAN VERSION 1.0)
 file(GLOB_RECURSE SRC_FILES src/src/socketcan_cpp.cpp)
 
 add_library(socketcanexternallib STATIC src/socketcan_cpp.cpp)
+
 target_include_directories(socketcanexternallib PUBLIC include)

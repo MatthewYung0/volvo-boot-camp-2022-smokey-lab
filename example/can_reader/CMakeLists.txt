@@ -9,3 +9,5 @@ file(GLOB_RECURSE SRC_FILES src/*.cpp)
 add_executable(can_reader can_read.cpp ${SRC_FILES})
 
 target_link_libraries(can_reader PUBLIC libcanio)
+
+target_include_directories(can_reader PUBLIC ../app/input_handler/include)

@@ -1,5 +1,4 @@
 #include "socketcansetup.h"
-#include "canmessage.h"
 
 const std::string can_network_name = "engineCAN";
 

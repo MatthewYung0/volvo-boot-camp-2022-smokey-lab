@@ -6,12 +6,11 @@ project(input_handler VERSION 1.0)
 
 file(GLOB_RECURSE SRC_FILES src/*.cpp)
 
-
 add_executable(input_handler main.cpp ${SRC_FILES})
 
 target_include_directories(input_handler PUBLIC include)
 
-target_include_directories(libcanio PUBLIC libuserinputcheck)
+target_include_directories(input_handler PUBLIC ../../common/libuserinputcheck)
 
 find_package(Curses REQUIRED)
 
