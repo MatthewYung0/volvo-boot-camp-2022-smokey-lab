@@ -9,7 +9,7 @@ Emulator::Emulator()
   carSpeed = 0;
   engineStateInput = 0;
   engineState = 0;
-  gearInput = 2; // Set park as default
+  gearInput = PARK; // Set park as default
   dGear = 1;
   pedal = 0;
   pedalInput = 0;
@@ -30,6 +30,11 @@ void Emulator::setCurrentRPM(int pedalInput) {
   else if (pedalInput < previousPedalInput)
     pedal = 0;
 
+  float dampFact = 100;
+  if (dGear > 1 && (pedalInput * rpmRange / 100) > currentRPM) {
+    dampFact = 100 * float(currentRPM) / ((pedalInput * rpmRange) / 100);
+  }
+
   std::cout << (pedal ? "PedalDown" : "PedalUp") << std::endl;
 
   // Check if engine is on and R, N or D gear
@@ -42,8 +47,12 @@ void Emulator::setCurrentRPM(int pedalInput) {
     else {
       if (pedalInput == 0)
         this->currentRPM = idleRPM;
-      else
-        this->currentRPM = pedalInput * rpmRange / 100;
+      else {
+        if (dampFact < pedalInput)
+          this->currentRPM = dampFact * rpmRange / 100;
+        else
+          this->currentRPM = pedalInput * rpmRange / 100;
+      }
     }
 
     // Store
