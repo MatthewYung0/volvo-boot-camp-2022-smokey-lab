@@ -15,12 +15,14 @@ int main() {
   int ch = 0;
   nodelay(stdscr, TRUE);
 
+  int const esc_key = 27;
+
   scpp::SocketCan sockat_can;
   InitSocketcan(sockat_can);
 
   CanMessage can_msg;
 
-  while (true) {
+  while (ch != esc_key) {
 
     if ((ch = getch()) == ERR) {
     }
