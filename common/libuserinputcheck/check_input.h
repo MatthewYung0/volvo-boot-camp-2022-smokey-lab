@@ -1,20 +1,15 @@
-#define APPLICATION_ON_OFF
+static const uint32_t USER_FRAME_ID = 0xAAA;
+static const uint32_t ENGINE_FRAME_ID = 0xBBB;
 
-namespace canData {
-    enum DataElement {
-        ignition = 0,
-        gear = 1,
-        pedal_pos = 2
-     };
-}
+namespace user_frame_data_partition {
+static const uint8_t IGNITION = 0;
+static const uint8_t LEVER = 1;
+static const uint8_t PEDAL_POS = 2;
+} // namespace frame_data_partition
 
-namespace gearLever {
-    enum gear {
-        park = 0,
-        rear = 1,
-        neutral = 2,
-        drive = 3
-     };
-}
-
-
+namespace gear_lever {
+static const uint8_t PARK = 0;
+static const uint8_t REAR = 1;
+static const uint8_t NEUTRAL = 2;
+static const uint8_t DRIVE = 3;
+} // namespace gear_lever
