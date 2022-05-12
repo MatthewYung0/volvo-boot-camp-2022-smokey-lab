@@ -1,3 +1,4 @@
+#include <cstdint>
 static const uint32_t USER_FRAME_ID = 0xAAA;
 static const uint32_t ENGINE_FRAME_ID = 0xBBB;
 
