@@ -22,3 +22,5 @@ cd app/emulator/ && mate-terminal -e ./emulator&
 echo "open emulator terminal"
 cd app/input_handler/ && mate-terminal -e ./input_handler &
 echo "open input_handler terminal"
+cd app/output_display/ && mate-terminal -e ./avic -c engineCAN &
+echo "open output display"
