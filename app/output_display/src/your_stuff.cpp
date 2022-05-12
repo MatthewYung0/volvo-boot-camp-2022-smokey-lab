@@ -6,16 +6,19 @@
 #include <chrono>
 #include "your_stuff.h"
 #include "can_common.h"
-//#include "check_can_frame_id.h"
 
 void yourStuff::YouHaveJustRecievedACANFrame(const canfd_frame * const _frame) {
 
-    
-    if (_frame->can_id, 0xBBB) {
+    if (_frame->can_id == 0xBBB) {
+        this->InstrumentCluster.setRPM(3000);
+        this->InstrumentCluster.setSpeed(_frame->data[0]);
+        this->InstrumentCluster.setGear(_frame->data[1]);
+        this->InstrumentCluster.setFuelGauges(255);
+        this->InstrumentCluster.setTemperatureGauges(125);
+        this->InstrumentCluster.setOilTemperatureGauges(255);
+        this->InstrumentCluster.ignite(_frame->data[3]);
+        this->InstrumentCluster.setTXT("TEAM SMOKEY ALL DA WAAYYYS");
         //const struct CAN::MSG::_engine *d = reinterpret_cast<const struct CAN::MSG::_engine * >((_frame->data));
-    this->InstrumentCluster.ignite(1);
-    this->InstrumentCluster.setRPM(300);
-    this->InstrumentCluster.setSpeed(20);
     }
 
     //}
