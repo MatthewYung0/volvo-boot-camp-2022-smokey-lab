@@ -1,54 +1,68 @@
 //#include <chrono>
 #include <thread>
 #include <iostream>
+#include <pthread.h>
+#include <bits/stdc++.h>
+#include <chrono>
 #include "your_stuff.h"
 #include "can_common.h"
+//#include "check_can_frame_id.h"
 
 void yourStuff::YouHaveJustRecievedACANFrame(const canfd_frame * const _frame) {
+
     
-    switch (_frame->can_id) {
-    case CAN::MSG::GAUGES_ID: {
-        const struct CAN::MSG::Gauges_t::_inner* s =
-                reinterpret_cast<const struct CAN::MSG::Gauges_t::_inner* >((_frame->data));
-        this->InstrumentCluster.setFuelGauges(s->G_FUEL);
-        this->InstrumentCluster.setTemperatureGauges(s->G_TEMP);
-        this->InstrumentCluster.setOilTemperatureGauges(s->G_OILT);
-        break;
+    if (_frame->can_id, 0xBBB) {
+        //const struct CAN::MSG::_engine *d = reinterpret_cast<const struct CAN::MSG::_engine * >((_frame->data));
+    this->InstrumentCluster.ignite(1);
+    this->InstrumentCluster.setRPM(300);
+    this->InstrumentCluster.setSpeed(20);
     }
-    case CAN::MSG::ICONSS_ID:
-        struct _icons  p;// = reinterpret_cast<struct _icons * >((_frame->data));
-        static bool once = false;
 
-        if (!once) {
-            p.hazard = 1;
-            once = true;
-        } else
-            p.hazard = 0;
-        this->InstrumentCluster.setIcon(&p);
-        break;
-//    case CAN::MSG::USERIN_ID: {
-//       // const struct CAN::MSG::_userin *d = reinterpret_cast<const struct CAN::MSG::_userin * >((_frame->data));
-//       // this->InstrumentCluster.ignite(d->IGNT);
-//    }
-//        break;
+    //}
 
-    case CAN::MSG::GEARBX_ID: {
-        const struct CAN::MSG::Gearbx_t::_bits *d = reinterpret_cast<const struct CAN::MSG::Gearbx_t::_bits * >((_frame->data));
-        this->InstrumentCluster.setGearPindle_int(d->GEAR_P);
-        this->InstrumentCluster.setGear(d->GEAR_N);
-    }
-        break;
-    case CAN::MSG::ENGINE_ID: {
-        const struct CAN::MSG::_engine *d = reinterpret_cast<const struct CAN::MSG::_engine * >((_frame->data));
-        this->InstrumentCluster.ignite(d->RUN);
-        this->InstrumentCluster.setRPM(d->RPM);
-        this->InstrumentCluster.setSpeed(d->SPD);
+//     switch (_frame->can_id) {
+//     case CAN::MSG::GAUGES_ID: {== scPP::CanFrame, 
+//         const struct CAN::MSG::Gauges_t::_inner* s =
+//                 reinterpret_cast<const struct CAN::MSG::Gauges_t::_inner* >((_frame->data));
+//         this->InstrumentCluster.setFuelGauges(s->G_FUEL);
+//         this->InstrumentCluster.setTemperatureGauges(s->G_TEMP);
+//         this->InstrumentCluster.setOilTemperatureGauges(s->G_OILT);
+//         break;
+//     }
+//     case CAN::MSG::ICONSS_ID:
+//         struct _icons  p;// = reinterpret_cast<struct _icons * >((_frame->data));
+//         static bool once = false;
 
-    }
-        break;
-    default:
-        break;
-    }
+//         if (!once) {
+//             p.hazard = 1;
+//             once = true;
+//         } else
+//             p.hazard = 0;
+//         this->InstrumentCluster.setIcon(&p);
+//         break;
+// //    case CAN::MSG::USERIN_ID: {
+// //       // const struct CAN::MSG::_userin *d = reinterpret_cast<const struct CAN::MSG::_userin * >((_frame->data));
+// //       // this->InstrumentCluster.ignite(d->IGNT);
+// //    }
+// //        break;
+
+//     case CAN::MSG::GEARBX_ID: {
+//         const struct CAN::MSG::Gearbx_t::_bits *d = reinterpret_cast<const struct CAN::MSG::Gearbx_t::_bits * >((_frame->data));
+//         this->InstrumentCluster.setGearPindle_int(d->GEAR_P);
+//         this->InstrumentCluster.setGear(d->GEAR_N);
+//     }
+//         break;
+//     case CAN::MSG::ENGINE_ID: {
+//         const struct CAN::MSG::_engine *d = reinterpret_cast<const struct CAN::MSG::_engine * >((_frame->data));
+//         this->InstrumentCluster.ignite(d->RUN);
+//         this->InstrumentCluster.setRPM(d->RPM);
+//         this->InstrumentCluster.setSpeed(d->SPD);
+
+//     }
+//         break;
+//     default:
+//         break;
+//     }
 
 }
 
