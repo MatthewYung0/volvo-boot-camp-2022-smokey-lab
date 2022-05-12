@@ -1,11 +1,8 @@
-
 #include "Emulator.h"
 #include <iostream>
 
 #include "socketcan_cpp.h"
 #include "socketcansetup.h"
-
-#include <curses.h>
 
 #include <chrono> // std::chrono::microseconds
 #include <thread>
@@ -14,21 +11,21 @@ using namespace std;
 
 int main() {
 
-  scpp::SocketCan sockat_can;
-  InitSocketcan(sockat_can);
-  scpp::CanFrame in_fr;
+  scpp::SocketCan socket_can;
+  InitSocketcan(socket_can);
+  scpp::CanFrame in_fr, out_fr;
 
-  // int ch = 0;
-  // CanMessage can_msg;
+  out_fr.len = 8;
+  out_fr.id = ENGINE_FRAME_ID;
 
   Emulator volvo;
 
   while (true) {
 
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    ReadMessage(sockat_can, in_fr);
+    ReadMessage(socket_can, in_fr);
 
-    if (in_fr.id == 0xAAA) {
+    if (in_fr.id == USER_FRAME_ID) {
       volvo.setEngineState(in_fr.data[0]);
       volvo.setCurrentGear(in_fr.data[1]);
 
@@ -48,11 +45,20 @@ int main() {
       cout << "DGear: " << volvo.getDGear() << endl;
       cout << "InputGear: " << volvo.getCurrentGear() << endl;
       cout << "--------------------------" << endl;
-      //   if ((ch = getch()) == ERR) {
-      //   }
-      //   can_msg.SetFrame(ch);
-      //   SendMessage(sockat_can, can_msg.frame);
-      // }
+
+      out_fr.data[0] = volvo.getCarSpeed();
+      out_fr.data[1] = volvo.getCurrentGear();
+      out_fr.data[2] = volvo.getDGear();
+      out_fr.data[3] = volvo.getEngineState();
+      out_fr.data[4] = volvo.getCurrentRPM();
+
+      cout << "out_fr[0] Speed: " << int(out_fr.data[0]) << endl;
+      cout << "out_fr[1] gear: " << int(out_fr.data[1]) << endl;
+      cout << "out_fr[2] Dgear: " << int(out_fr.data[2]) << endl;
+      cout << "out_fr[3] EngState: " << int(out_fr.data[3]) << endl;
+      cout << "out_fr[3] RPM: " << int(out_fr.data[4]) << endl;
+
+      SendMessage(socket_can, out_fr);
     }
   }
   return 0;

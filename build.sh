@@ -18,7 +18,7 @@ echo "run make"
 
 # add terminal you use if you dont have
 # mate-terminal
-cd app/emulator/ && mate-terminal  -e ./emulator&
+cd app/emulator/ && mate-terminal -e ./emulator&
 echo "open emulator terminal"
-cd app/input_handler/ && mate-terminal  -e ./input_handler &
+cd app/input_handler/ && mate-terminal -e ./input_handler &
 echo "open input_handler terminal"
