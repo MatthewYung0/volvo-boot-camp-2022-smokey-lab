@@ -10,7 +10,7 @@ add_executable(input_handler main.cpp ${SRC_FILES})
 
 target_include_directories(input_handler PUBLIC include)
 
-target_include_directories(input_handler PUBLIC ../../common/libuserinputcheck)
+target_include_directories(input_handler PUBLIC ../../common)
 
 find_package(Curses REQUIRED)
 
