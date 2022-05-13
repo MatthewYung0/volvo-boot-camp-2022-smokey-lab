@@ -32,3 +32,5 @@ target_link_libraries(avic
     Qt5::QuickWidgets
     ${QTAPPFW_LIBRARIES}
 )
+
+target_include_directories(avic PUBLIC ../../common)
