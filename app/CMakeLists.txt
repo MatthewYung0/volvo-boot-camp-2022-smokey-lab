@@ -1,2 +1,3 @@
 add_subdirectory(input_handler)
 add_subdirectory(emulator)
+add_subdirectory(output_display)

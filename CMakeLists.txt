@@ -15,3 +15,4 @@ file(TO_CMAKE_PATH "${PROJECT_BINARY_DIR}/libs/libcanreadwrite/CMakeLists.txt" L
 file(TO_CMAKE_PATH "${PROJECT_BINARY_DIR}/external/socketcan-cpp-master/CMakeLists.txt" LOC_PATH)
 file(TO_CMAKE_PATH "${PROJECT_BINARY_DIR}/example/CMakeLists.txt" LOC_PATH)
 file(TO_CMAKE_PATH "${PROJECT_BINARY_DIR}/app/CMakeLists.txt" LOC_PATH)
+file(TO_CMAKE_PATH "${PROJECT_BINARY_DIR}app/output_display/CMakeLists.txt" LOC_PATH)

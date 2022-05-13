@@ -36,3 +36,6 @@
 
 # VSCode
 /.vscode
+
+# Output display build folder
+/app/output_display/build

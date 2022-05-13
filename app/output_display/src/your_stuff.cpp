@@ -1,8 +1,5 @@
-#include <thread>
 #include <iostream>
-#include <pthread.h>
 #include <bits/stdc++.h>
-#include <chrono>
 #include "your_stuff.h"
 #include "can_common.h"
 
@@ -18,7 +15,7 @@ void yourStuff::YouHaveJustRecievedACANFrame(const canfd_frame * const _frame) {
         this->InstrumentCluster.setGearPindle_int(_frame->data[1]);
         this->InstrumentCluster.setTXT("TEAM SMOKEY ALLL DA WAAAY");
     }
-
+}
 
 /******************************* ANYTHING BELOW THIS LINE IS JUST BORING STUFF *******************************/
 

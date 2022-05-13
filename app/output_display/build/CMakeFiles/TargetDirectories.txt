@@ -1,4 +1,0 @@
-/home/myung/repos/volvo-boot-camp-2022-smokey-lab/app/output_display/build/CMakeFiles/rebuild_cache.dir
-/home/myung/repos/volvo-boot-camp-2022-smokey-lab/app/output_display/build/CMakeFiles/edit_cache.dir
-/home/myung/repos/volvo-boot-camp-2022-smokey-lab/app/output_display/build/CMakeFiles/avic.dir
-/home/myung/repos/volvo-boot-camp-2022-smokey-lab/app/output_display/build/CMakeFiles/avic_autogen.dir
