@@ -5,16 +5,6 @@
 #include <chrono>
 #include "your_stuff.h"
 #include "can_common.h"
-//#include "ignition_start_rpm_display.h"
-
-// void ignition_start_speed_display() {
-//     for (int start_speed = 0; start_speed < 255; start_speed++) {
-//         this->InstrumentCluster.setSpeed(start_speed);
-//     }
-//     for (int end_speed = 255; end_speed > 0; end_speed--) {
-//         this->InstrumentCluster.setSpeed(end_speed);
-//     }
-// }
 
 void yourStuff::YouHaveJustRecievedACANFrame(const canfd_frame * const _frame) {
 
@@ -26,7 +16,7 @@ void yourStuff::YouHaveJustRecievedACANFrame(const canfd_frame * const _frame) {
         this->InstrumentCluster.setOilTemperatureGauges(180);
         this->InstrumentCluster.setGear(_frame->data[2]);
         this->InstrumentCluster.setGearPindle_int(_frame->data[1]);
-        this->InstrumentCluster.setTXT("STARTED");
+        this->InstrumentCluster.setTXT("TEAM SMOKEY ALLL DA WAAAY");
     }
 
 
