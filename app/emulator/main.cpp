@@ -83,13 +83,13 @@ int main() {
       }
 
       volvo.setCurrentRPM(int(in_fr.data[user_frame_data_partition::PEDAL_POS]));
-      // cout << "Pedal value: " << int(in_fr.data[2]) << endl;
-      // cout << "--------------------------" << endl;
-      // cout << "currenRPM: " << volvo.getCurrentRPM() << endl;
-      // cout << "carSpeed: " << volvo.getCarSpeed() << endl;
-      // cout << "DGear: " << volvo.getDGear() << endl;
-      // cout << "InputGear: " << volvo.getCurrentGear() << endl;
-      // cout << "--------------------------" << endl;
+      cout << "Pedal value: " << int(in_fr.data[user_frame_data_partition::PEDAL_POS]) << endl;
+      cout << "--------------------------" << endl;
+      cout << "currenRPM: " << volvo.getCurrentRPM() << endl;
+      cout << "carSpeed: " << volvo.getCarSpeed() << endl;
+      cout << "DGear: " << volvo.getDGear() << endl;
+      cout << "InputGear: " << volvo.getCurrentGear() << endl;
+      cout << "--------------------------" << endl;
 
       out_fr.data[engine_frame_data_partition::VELOCITY] = volvo.getCarSpeed();
       out_fr.data[engine_frame_data_partition::LEVER] = volvo.getCurrentGear();
@@ -130,6 +130,7 @@ int main() {
     }
     read_msg = true;
     cv.notify_one();
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
   }
   return 0;
 }
