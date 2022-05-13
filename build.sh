@@ -21,6 +21,10 @@ echo "run make"
 cd app/emulator/ && gnome-terminal -e ./emulator&
 echo "open emulator terminal"
 cd app/input_handler/ && gnome-terminal -e ./input_handler &
+<<<<<<< HEAD
 echo "open input_handler terminal"
 cd app/output_display/ && gnome-terminal -e ./avic -c engineCAN &
 echo "open output display"
+=======
+echo "open input_handler terminal"
+>>>>>>> master
