@@ -1,11 +1,14 @@
 #include "Emulator.h"
 #include <iostream>
+#include <sstream>
 
 #include "socketcan_cpp.h"
 #include "socketcansetup.h"
 
 #include <chrono> // std::chrono::microseconds
 #include <thread>
+
+#include <bitset>
 
 using namespace std;
 
@@ -17,6 +20,9 @@ int main() {
 
   out_fr.len = 8;
   out_fr.id = ENGINE_FRAME_ID;
+
+  unsigned int rpm = 650;
+  std::bitset<8> hex_rpm;
 
   Emulator volvo;
 
@@ -50,13 +56,31 @@ int main() {
       out_fr.data[1] = volvo.getCurrentGear();
       out_fr.data[2] = volvo.getDGear();
       out_fr.data[3] = volvo.getEngineState();
-      out_fr.data[4] = volvo.getCurrentRPM();
 
-      cout << "out_fr[0] Speed: " << int(out_fr.data[0]) << endl;
-      cout << "out_fr[1] gear: " << int(out_fr.data[1]) << endl;
-      cout << "out_fr[2] Dgear: " << int(out_fr.data[2]) << endl;
-      cout << "out_fr[3] EngState: " << int(out_fr.data[3]) << endl;
-      cout << "out_fr[3] RPM: " << int(out_fr.data[4]) << endl;
+      rpm = volvo.getCurrentRPM();
+      hex_rpm = rpm;
+      // uint8 in; /* input in */ uint8 out1 = in & 0xf, out2 = in >> 4u;
+      // out_fr.data[4] = rpm & 0xf >> 0;
+      // out_fr.data[5] = rpm & 0xf0 >> 4;
+      // out_fr.data[6] = rpm & 0xf00 >> 8;
+      // out_fr.data[7] = rpm & 0xf000 >> 12;
+
+      out_fr.data[4] = ((rpm & 0xf000) >> 12);
+      out_fr.data[5] = ((rpm & 0xf00) >> 8);
+      out_fr.data[6] = ((rpm & 0xf0) >> 4);
+      out_fr.data[7] = ((rpm & 0xf) >> 0);
+
+      cout << ((rpm & 0xf000) >> 12) << endl;
+      cout << ((rpm & 0xf00) >> 8) << endl;
+      cout << ((rpm & 0xf0) >> 4) << endl;
+      cout << ((rpm & 0xf) >> 0) << endl;
+
+      // // (a << 16) | (b << 8)
+      cout << "out_fr[4-7] RPM: "
+           << int((out_fr.data[4] << 12) | (out_fr.data[5]) << 8 |
+                  (out_fr.data[6]) << 4 | (out_fr.data[7]) << 0)
+           << endl;
+      // // cout << "out_fr[4] RPM: " << int(out_fr.data[5]) << endl;
 
       SendMessage(socket_can, out_fr);
     }
