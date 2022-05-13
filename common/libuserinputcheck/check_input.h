@@ -16,7 +16,7 @@ static const uint8_t GEAR = 2;
 
 namespace gear_lever {
 static const uint8_t PARK = 0;
-static const uint8_t REAR = 1;
-static const uint8_t NEUTRAL = 2;
+static const uint8_t NEUTRAL = 1;
+static const uint8_t REAR = 2;
 static const uint8_t DRIVE = 3;
 } // namespace gear_lever
