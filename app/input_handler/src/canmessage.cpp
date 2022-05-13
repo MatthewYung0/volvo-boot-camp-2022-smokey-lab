@@ -1,5 +1,5 @@
 #include "canmessage.h"
-#include "check_input.h"
+#include "common_datatypes.h"
 #include <iostream>
 
 CanMessage::CanMessage() {
