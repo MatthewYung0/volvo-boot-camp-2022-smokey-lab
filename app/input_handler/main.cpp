@@ -27,7 +27,7 @@ int main() {
     if ((ch = getch()) == ERR) {
     }
     can_msg.SetFrame(ch);
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    // std::this_thread::sleep_for(std::chrono::milliseconds(100));
     SendMessage(sockat_can, can_msg.frame);
   }
 

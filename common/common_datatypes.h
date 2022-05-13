@@ -10,8 +10,10 @@ static const uint8_t PEDAL_POS = 2;
 
 namespace engine_frame_data_partition {
 static const uint8_t VELOCITY = 0;
-static const uint8_t RPM = 1;
+static const uint8_t LEVER = 1;
 static const uint8_t GEAR = 2;
+static const uint8_t IGNITION = 3;
+static const uint8_t RPM = 4;
 } // namespace engine_frame_data_partition
 
 namespace gear_lever {

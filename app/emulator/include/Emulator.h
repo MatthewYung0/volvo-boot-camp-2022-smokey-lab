@@ -1,10 +1,6 @@
 #pragma once
-// #define PARK 0
-// #define REVERSE 1
-// #define NEUTRAL 2
-// #define DRIVE 3
 
-#include "check_input.h"
+#include "common_datatypes.h"
 #include <iostream>
 
 class Emulator {
