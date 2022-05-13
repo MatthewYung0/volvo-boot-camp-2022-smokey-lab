@@ -42,4 +42,4 @@ An example:
 
 # Message Output
 
-![Project_Deliverables](https://github.com/MatthewYung0/volvo-boot-camp-2022-smokey-lab/blob/master/docs/frame_emulator.png)
+![Project_Deliverables](https://github.com/MatthewYung0/volvo-boot-camp-2022-smokey-lab/blob/master/docs/Input_Frame_Output_Handler.png)
