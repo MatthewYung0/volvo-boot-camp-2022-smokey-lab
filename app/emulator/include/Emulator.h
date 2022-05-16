@@ -5,56 +5,57 @@
 
 class Emulator {
 public:
-  const int idleRPM;        // idle RPM
-  const int maxRPM;         // max RPM
-  int currentRPM;           // RPM from the pedal position
-  int previousPedalInput;   // Previous pedal state
-  int carSpeed;             // actual car speed
-  int engineStateInput;     // engineState user input
-  bool engineState;         // engineState true/false
-  int gear;                 /*
-                              Input gear 0-3:
-                               -> 0: gear for park
-                               -> 1: gear for reverse
-                               -> 2: gear for neutral
-                               -> 3: gear for drive
-                            */
-  int dGear;                // Drive mode gear 1-5
-  const int maxGear;        // Number of gears in D-mode
-  const float gearRatio[7]; // Define gear ration, position 0 is for Reverse
-  int pedal;
-  const int rpmRange; // engine rpm interval
-  int pedalInput;
-
-  Emulator();
-  // Emulator(int, int, int, float, bool, int, int, int, float, float);
-  ~Emulator();
-
-  int getIdleRPM() const;
-  int getMaxRPM() const;
-  int getCurrentRPM() const;
   bool getEngineState() const;
-
-  void setCurrentRPM(int);
   void setEngineState(int);
+  float getCarSpeed() const;
+
+  int getCurrentRPM() const;
+  void setCurrentRPM(int);
+
+  int getCurrentGear() const;
+  void setCurrentGear(int);
+  int getDGear() const; // Get current drive gear
 
   void moveRearward();
   void moveForward();
 
-  float getCarSpeed() const;
+  void shiftUp();
+  void shiftDown();
+
+  Emulator();
+  ~Emulator();
+
+private:
+  const int idle_rpm;        // idle RPM
+  const int max_rpm;         // max RPM
+  int current_rpm;           // RPM from the pedal position
+  int previous_pedal_input;  // Previous pedal state
+  int car_speed;             // actual car speed
+  int engine_state_input;    // engine_state user input
+  bool engine_state;         // engine_state true/false
+  int gear;                  /*
+                               Input gear 0-3:
+                                -> 0: gear for park
+                                -> 1: gear for reverse
+                                -> 2: gear for neutral
+                                -> 3: gear for drive
+                             */
+  int dGear;                 // Drive mode gear 1-5
+  const int max_gear;        // Number of gears in D-mode
+  const float gear_ratio[7]; // Define gear ration, position 0 is for Reverse
+  int pedal;
+  const int rpm_range; // engine rpm interval
+  int pedal_input;
+
+  int getIdleRPM() const;
+  int getMaxRPM() const;
+
   void setCarSpeed(float);
 
   //********************************************************
   // GearBox
 
-  bool checkGear(int gearInput);
-  int getCurrentGear() const;
-  void setCurrentGear(int gearInput);
-  int getDGear() const; // Get current drive gear
-  void setDGear();      // Set initial current drive gear to 1
-
-  void shiftUp();
-  void shiftDown();
-
+  bool checkGear(int);
+  void setDGear(); // Set initial current drive gear to 1
   int getMaxGear() const;
 };
