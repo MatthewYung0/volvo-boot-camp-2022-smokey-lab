@@ -30,6 +30,9 @@ void CanMessage::SetGearDrive() {
 void CanMessage::SetPedalPos(int _pedal_pos) {
   this->frame.data[user_frame_data_partition::PEDAL_POS] = _pedal_pos;
 }
+void CanMessage::InitiateGracefulShutdown() {
+  this->frame.data[user_frame_data_partition::EXIT] = EXIT;
+}
 
 void CanMessage::SetFrame(int _input) {
   std::cout << _input << std::endl;
@@ -78,6 +81,9 @@ void CanMessage::SetFrame(int _input) {
     break;
   case THROTTLE_90:
     CanMessage::SetPedalPos(90);
+    break;
+  case EXIT:
+    CanMessage::InitiateGracefulShutdown();
     break;
 
   default:

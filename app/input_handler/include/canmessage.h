@@ -1,11 +1,12 @@
 #pragma once
 #include "socketcan_cpp.h"
 
-static const int START_STOP = 115;
-static const int GEAR_DRIVE = 100;
-static const int GEAR_REAR = 114;
-static const int GEAR_NEUTRAL = 110;
-static const int GEAR_PARK = 112;
+static const int START_STOP = 's';
+static const int GEAR_DRIVE = 'd';
+static const int GEAR_REAR = 'r';
+static const int GEAR_NEUTRAL = 'n';
+static const int GEAR_PARK = 'p';
+static const int EXIT = 'q';
 static const int THROTTLE_0 = 48;
 static const int THROTTLE_10 = 49;
 static const int THROTTLE_20 = 50;
@@ -34,4 +35,5 @@ private:
   void SetPedalPosUp();
   void SetPedalPosDown();
   void SetPedalPos(int _pedal_pos);
+  void InitiateGracefulShutdown();
 };
