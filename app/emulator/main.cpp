@@ -1,4 +1,4 @@
-#include "Emulator.h"
+#include "emulator.h"
 #include <iostream>
 #include <sstream>
 
@@ -74,16 +74,19 @@ int main() {
       volvo.setEngineState(in_fr.data[user_frame_data_partition::IGNITION]);
       volvo.setCurrentGear(in_fr.data[user_frame_data_partition::LEVER]);
 
-      if (in_fr.data[user_frame_data_partition::LEVER] == 3) {
+      if (in_fr.data[user_frame_data_partition::LEVER] == gear_lever::DRIVE) {
         volvo.moveForward();
         cout << "Move Forward" << endl;
-      } else if (in_fr.data[user_frame_data_partition::LEVER] == 1) {
+      } else if (in_fr.data[user_frame_data_partition::LEVER] ==
+                 gear_lever::REAR) {
         volvo.moveRearward();
         cout << "Move Rearward" << endl;
       }
 
-      volvo.setCurrentRPM(int(in_fr.data[user_frame_data_partition::PEDAL_POS]));
-      cout << "Pedal value: " << int(in_fr.data[user_frame_data_partition::PEDAL_POS]) << endl;
+      volvo.setCurrentRPM(
+          int(in_fr.data[user_frame_data_partition::PEDAL_POS]));
+      cout << "Pedal value: "
+           << int(in_fr.data[user_frame_data_partition::PEDAL_POS]) << endl;
       cout << "--------------------------" << endl;
       cout << "currenRPM: " << volvo.getCurrentRPM() << endl;
       cout << "carSpeed: " << volvo.getCarSpeed() << endl;
@@ -94,7 +97,8 @@ int main() {
       out_fr.data[engine_frame_data_partition::VELOCITY] = volvo.getCarSpeed();
       out_fr.data[engine_frame_data_partition::LEVER] = volvo.getCurrentGear();
       out_fr.data[engine_frame_data_partition::GEAR] = volvo.getDGear();
-      out_fr.data[engine_frame_data_partition::IGNITION] = volvo.getEngineState();
+      out_fr.data[engine_frame_data_partition::IGNITION] =
+          volvo.getEngineState();
 
       rpm = volvo.getCurrentRPM();
       hex_rpm = rpm;
