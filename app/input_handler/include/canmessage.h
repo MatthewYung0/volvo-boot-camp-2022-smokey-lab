@@ -1,12 +1,12 @@
 #pragma once
 #include "socketcan_cpp.h"
 
+namespace keyboard_input {
 static const int START_STOP = 's';
 static const int GEAR_DRIVE = 'd';
 static const int GEAR_REAR = 'r';
 static const int GEAR_NEUTRAL = 'n';
 static const int GEAR_PARK = 'p';
-static const int EXIT = 'q';
 static const int THROTTLE_0 = 48;
 static const int THROTTLE_10 = 49;
 static const int THROTTLE_20 = 50;
@@ -17,6 +17,8 @@ static const int THROTTLE_60 = 54;
 static const int THROTTLE_70 = 55;
 static const int THROTTLE_80 = 56;
 static const int THROTTLE_90 = 57;
+
+} // namespace keyboard_input
 
 class CanMessage {
 public:

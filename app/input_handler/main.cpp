@@ -1,6 +1,7 @@
 #include "canmessage.h"
 #include "socketcan_cpp.h"
 #include "socketcansetup.h"
+#include "common_datatypes.h"
 #include <curses.h>
 #include <iostream>
 
@@ -26,20 +27,20 @@ int main() {
 
     if ((ch = getch()) == ERR) {
     }
-    if (ch == EXIT) {
+    if (ch == keyboard_common_input::EXIT) {
       bool run = true;
       while (run) {
         for (int i = 0; i < 100; i++) {
-          can_msg.SetFrame(THROTTLE_0);
+          can_msg.SetFrame(keyboard_input::THROTTLE_0);
           SendMessage(sockat_can, can_msg.frame);
           std::this_thread::sleep_for(std::chrono::milliseconds(100));
         }
         for (int i = 0; i < 10; i++) {
-          can_msg.SetFrame(GEAR_PARK);
+          can_msg.SetFrame(keyboard_input::GEAR_PARK);
           SendMessage(sockat_can, can_msg.frame);
           std::this_thread::sleep_for(std::chrono::milliseconds(100));
         }
-        can_msg.SetFrame(START_STOP);
+        can_msg.SetFrame(keyboard_input::START_STOP);
         can_msg.SetFrame(ch);
         SendMessage(sockat_can, can_msg.frame);
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
