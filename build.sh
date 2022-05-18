@@ -27,4 +27,4 @@ cd build/app/input_handler/ && gnome-terminal --geometry 60x12+430-0 -e ./input_
 echo "open input_handler terminal"
 cd build/app/output_display/ && gnome-terminal --geometry 60x12+930-0   --command="./avic -c engineCAN" &
 echo "open output display"
-gnom-terminal  --geometry 60x12-0-0 --command="candump engineCAN" &
+gnome-terminal  --geometry 60x12-0-0 --command="candump engineCAN" &
