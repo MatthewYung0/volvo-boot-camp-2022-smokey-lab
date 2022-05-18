@@ -35,7 +35,7 @@ void CanMessage::InitiateGracefulShutdown() {
 }
 
 void CanMessage::SetFrame(int _input) {
-  std::cout << _input << std::endl;
+  std::cout << _input << "\n\r";
   switch (_input) {
   case keyboard_input::START_STOP:
     CanMessage::SetIgnition();
