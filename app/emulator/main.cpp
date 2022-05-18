@@ -67,27 +67,21 @@ int main() {
     if (in_fr.id == USER_FRAME_ID) {
       write_msg = false;
 
-      // ===============================
-      // PUT EMULATOR CODE FROM HERE...
-      // ===============================
-
       volvo.setEngineState(in_fr.data[user_frame_data_partition::IGNITION]);
       volvo.setCurrentGear(in_fr.data[user_frame_data_partition::LEVER]);
 
       if (in_fr.data[user_frame_data_partition::LEVER] == gear_lever::DRIVE) {
         volvo.moveForward();
-        cout << "Move Forward" << endl;
       } else if (in_fr.data[user_frame_data_partition::LEVER] ==
                  gear_lever::REAR) {
         volvo.moveRearward();
-        cout << "Move Rearward" << endl;
       }
 
       volvo.setCurrentRPM(
           int(in_fr.data[user_frame_data_partition::PEDAL_POS]));
+      cout << "--------------------------" << endl;
       cout << "Pedal value: "
            << int(in_fr.data[user_frame_data_partition::PEDAL_POS]) << endl;
-      cout << "--------------------------" << endl;
       cout << "currenRPM: " << volvo.getCurrentRPM() << endl;
       cout << "carSpeed: " << volvo.getCarSpeed() << endl;
       cout << "DGear: " << volvo.getDGear() << endl;
@@ -102,32 +96,11 @@ int main() {
 
       rpm = volvo.getCurrentRPM();
       hex_rpm = rpm;
-      // uint8 in; /* input in */ uint8 out1 = in & 0xf, out2 = in >> 4u;
-      // out_fr.data[4] = rpm & 0xf >> 0;
-      // out_fr.data[5] = rpm & 0xf0 >> 4;
-      // out_fr.data[6] = rpm & 0xf00 >> 8;
-      // out_fr.data[7] = rpm & 0xf000 >> 12;
 
       out_fr.data[4] = ((rpm & 0xf000) >> 12);
       out_fr.data[5] = ((rpm & 0xf00) >> 8);
       out_fr.data[6] = ((rpm & 0xf0) >> 4);
       out_fr.data[7] = ((rpm & 0xf) >> 0);
-
-      // cout << ((rpm & 0xf000) >> 12) << endl;
-      // cout << ((rpm & 0xf00) >> 8) << endl;
-      // cout << ((rpm & 0xf0) >> 4) << endl;
-      // cout << ((rpm & 0xf) >> 0) << endl;
-
-      // // (a << 16) | (b << 8)
-      // cout << "out_fr[4-7] RPM: "
-      //      << int((out_fr.data[4] << 12) | (out_fr.data[5]) << 8 |
-      //             (out_fr.data[6]) << 4 | (out_fr.data[7]) << 0)
-      //      << endl;
-      // // cout << "out_fr[4] RPM: " << int(out_fr.data[5]) << endl;
-
-      // ==============================
-      // ......................TO HERE
-      // ==============================
 
       SendMessage(socket_can, out_fr);
       if (in_fr.data[user_frame_data_partition::EXIT] == 113) {
@@ -152,7 +125,7 @@ void read_message(scpp::SocketCan &_socket_can, scpp::CanFrame &_in_fr) {
     write_msg = true;
     lk.unlock();
     cv.notify_one();
-    if (_in_fr.data[user_frame_data_partition::EXIT] == 113) {
+    if (_in_fr.data[user_frame_data_partition::EXIT] == keyboard_common_input::EXIT) {
       std::this_thread::sleep_for(std::chrono::milliseconds(1000));
       exit(-1);
     }

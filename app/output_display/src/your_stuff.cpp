@@ -1,17 +1,22 @@
 #include "your_stuff.h"
 #include "can_common.h"
+#include "common_datatypes.h"
 #include <bits/stdc++.h>
 #include <iostream>
 
 void yourStuff::YouHaveJustRecievedACANFrame(const canfd_frame *const _frame) {
 
-  if (_frame->can_id == 0xBBB) {
-    this->InstrumentCluster.ignite(_frame->data[3]);
+  if (_frame->can_id == ENGINE_FRAME_ID) {
+    this->InstrumentCluster.ignite(
+        _frame->data[engine_frame_data_partition::IGNITION]);
     this->InstrumentCluster.setRPM(
-        (_frame->data[4] << 12) | (_frame->data[5]) << 8 |
-        (_frame->data[6]) << 4 | (_frame->data[7]) << 0);
-    this->InstrumentCluster.setSpeed(_frame->data[0]);
-    if (_frame->data[3]) {
+        (_frame->data[engine_frame_data_partition::RPM_1] << 12) |
+        (_frame->data[engine_frame_data_partition::RPM_2]) << 8 |
+        (_frame->data[engine_frame_data_partition::RPM_3]) << 4 |
+        (_frame->data[engine_frame_data_partition::RPM_4]) << 0);
+    this->InstrumentCluster.setSpeed(
+        _frame->data[engine_frame_data_partition::VELOCITY]);
+    if (_frame->data[engine_frame_data_partition::IGNITION]) {
       this->InstrumentCluster.setFuelGauges(180);
       this->InstrumentCluster.setOilTemperatureGauges(110);
       this->InstrumentCluster.setTemperatureGauges(130);
@@ -20,8 +25,10 @@ void yourStuff::YouHaveJustRecievedACANFrame(const canfd_frame *const _frame) {
       this->InstrumentCluster.setOilTemperatureGauges(0);
       this->InstrumentCluster.setTemperatureGauges(0);
     }
-    this->InstrumentCluster.setGear(_frame->data[2]);
-    this->InstrumentCluster.setGearPindle_int(_frame->data[1]);
+    this->InstrumentCluster.setGear(
+        _frame->data[engine_frame_data_partition::GEAR]);
+    this->InstrumentCluster.setGearPindle_int(
+        _frame->data[engine_frame_data_partition::LEVER]);
     this->InstrumentCluster.setTXT("TEAM SMOKEY ALLL DA WAAAY");
   }
 }

@@ -31,58 +31,58 @@ void CanMessage::SetPedalPos(int _pedal_pos) {
   this->frame.data[user_frame_data_partition::PEDAL_POS] = _pedal_pos;
 }
 void CanMessage::InitiateGracefulShutdown() {
-  this->frame.data[user_frame_data_partition::EXIT] = EXIT;
+  this->frame.data[user_frame_data_partition::EXIT] = keyboard_common_input::EXIT;
 }
 
 void CanMessage::SetFrame(int _input) {
   std::cout << _input << std::endl;
   switch (_input) {
-  case START_STOP:
+  case keyboard_input::START_STOP:
     CanMessage::SetIgnition();
     break;
-  case GEAR_DRIVE:
+  case keyboard_input::GEAR_DRIVE:
     CanMessage::SetGearDrive();
     break;
-  case GEAR_REAR:
+  case keyboard_input::GEAR_REAR:
     CanMessage::SetGearRear();
     break;
-  case GEAR_NEUTRAL:
+  case keyboard_input::GEAR_NEUTRAL:
     CanMessage::SetGearNeutral();
     break;
-  case GEAR_PARK:
+  case keyboard_input::GEAR_PARK:
     CanMessage::SetGearPark();
     break;
-  case THROTTLE_0:
+  case keyboard_input::THROTTLE_0:
     CanMessage::SetPedalPos(0);
     break;
-  case THROTTLE_10:
+  case keyboard_input::THROTTLE_10:
     CanMessage::SetPedalPos(10);
     break;
-  case THROTTLE_20:
+  case keyboard_input::THROTTLE_20:
     CanMessage::SetPedalPos(20);
     break;
-  case THROTTLE_30:
+  case keyboard_input::THROTTLE_30:
     CanMessage::SetPedalPos(30);
     break;
-  case THROTTLE_40:
+  case keyboard_input::THROTTLE_40:
     CanMessage::SetPedalPos(40);
     break;
-  case THROTTLE_50:
+  case keyboard_input::THROTTLE_50:
     CanMessage::SetPedalPos(50);
     break;
-  case THROTTLE_60:
+  case keyboard_input::THROTTLE_60:
     CanMessage::SetPedalPos(60);
     break;
-  case THROTTLE_70:
+  case keyboard_input::THROTTLE_70:
     CanMessage::SetPedalPos(70);
     break;
-  case THROTTLE_80:
+  case keyboard_input::THROTTLE_80:
     CanMessage::SetPedalPos(80);
     break;
-  case THROTTLE_90:
+  case keyboard_input::THROTTLE_90:
     CanMessage::SetPedalPos(90);
     break;
-  case EXIT:
+  case keyboard_common_input::EXIT:
     CanMessage::InitiateGracefulShutdown();
     break;
 
