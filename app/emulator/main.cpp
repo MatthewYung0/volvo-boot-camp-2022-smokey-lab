@@ -10,8 +10,6 @@
 #include <mutex>
 #include <thread>
 
-#include <bitset>
-
 using namespace std;
 
 std::mutex rw_lock;
@@ -46,8 +44,7 @@ int main() {
   out_fr.len = 8;
   out_fr.id = ENGINE_FRAME_ID;
 
-  unsigned int rpm = 650;
-  std::bitset<8> hex_rpm;
+  int rpm = 650;
 
   Emulator volvo;
 
@@ -95,7 +92,6 @@ int main() {
           volvo.getEngineState();
 
       rpm = volvo.getCurrentRPM();
-      hex_rpm = rpm;
 
       out_fr.data[4] = ((rpm & 0xf000) >> 12);
       out_fr.data[5] = ((rpm & 0xf00) >> 8);
