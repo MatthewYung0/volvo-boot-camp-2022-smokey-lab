@@ -28,25 +28,21 @@ int main() {
     if ((ch = getch()) == ERR) {
     }
     if (ch == keyboard_common_input::EXIT) {
-      bool run = true;
-      while (run) {
-        for (int i = 0; i < 100; i++) {
-          can_msg.SetFrame(keyboard_input::THROTTLE_0);
-          SendMessage(sockat_can, can_msg.frame);
-          std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        }
-        for (int i = 0; i < 10; i++) {
-          can_msg.SetFrame(keyboard_input::GEAR_PARK);
-          SendMessage(sockat_can, can_msg.frame);
-          std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        }
-        can_msg.SetFrame(keyboard_input::START_STOP);
-        can_msg.SetFrame(ch);
+      for (int i = 0; i < 100; i++) {
+        can_msg.SetFrame(keyboard_input::THROTTLE_0);
         SendMessage(sockat_can, can_msg.frame);
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        run = false;
-        exit(-1);
       }
+      for (int i = 0; i < 10; i++) {
+        can_msg.SetFrame(keyboard_input::GEAR_PARK);
+        SendMessage(sockat_can, can_msg.frame);
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+      }
+      can_msg.SetFrame(keyboard_input::START_STOP);
+      can_msg.SetFrame(ch);
+      SendMessage(sockat_can, can_msg.frame);
+      std::this_thread::sleep_for(std::chrono::milliseconds(100));
+      exit(-1);
     } else {
       can_msg.SetFrame(ch);
       SendMessage(sockat_can, can_msg.frame);
