@@ -40,5 +40,8 @@ An example:
 ![State_Diagram](https://github.com/MatthewYung0/volvo-boot-camp-2022-smokey-lab/blob/master/docs/State%20Diagram%20(Rev%202).png)
 
 # 5. Message Output
+The messages coming from the Message Handler are sent to the Message Output, also known as the AVIC (Alten Virtual Instrument Cluster), and the data from the CAN frame is reflected via the AVIC. 
+
+Below is the structure of the frame in which the information is read. For example, the value for 'speed' is stored in the index position 0, while the gear is stored in index position 1. Note that for RPM, there are 4 bits since 1 bit cannot singlehandly hold a value of 8000 which is the maximum RPM.
 
 ![Project_Deliverables](https://github.com/MatthewYung0/volvo-boot-camp-2022-smokey-lab/blob/master/docs/Input_Frame_Output_Handler.png)
