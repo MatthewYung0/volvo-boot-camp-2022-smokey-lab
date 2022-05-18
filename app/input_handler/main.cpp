@@ -29,7 +29,7 @@ int main() {
     if (ch == EXIT) {
       bool run = true;
       while (run) {
-        for (int i = 0; i < 120; i++) {
+        for (int i = 0; i < 100; i++) {
           can_msg.SetFrame(THROTTLE_0);
           SendMessage(sockat_can, can_msg.frame);
           std::this_thread::sleep_for(std::chrono::milliseconds(100));
