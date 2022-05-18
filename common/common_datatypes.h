@@ -6,6 +6,7 @@ namespace user_frame_data_partition {
 static const uint8_t IGNITION = 0;
 static const uint8_t LEVER = 1;
 static const uint8_t PEDAL_POS = 2;
+static const uint8_t EXIT = 7;
 } // namespace user_frame_data_partition
 
 namespace engine_frame_data_partition {

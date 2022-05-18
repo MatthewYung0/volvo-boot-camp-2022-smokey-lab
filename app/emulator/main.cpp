@@ -130,6 +130,10 @@ int main() {
       // ==============================
 
       SendMessage(socket_can, out_fr);
+      if (in_fr.data[user_frame_data_partition::EXIT] == 113) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        exit(-1);
+      }
       lk.unlock();
     }
     read_msg = true;
@@ -148,5 +152,9 @@ void read_message(scpp::SocketCan &_socket_can, scpp::CanFrame &_in_fr) {
     write_msg = true;
     lk.unlock();
     cv.notify_one();
+    if (_in_fr.data[user_frame_data_partition::EXIT] == 113) {
+      std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+      exit(-1);
+    }
   }
 }
