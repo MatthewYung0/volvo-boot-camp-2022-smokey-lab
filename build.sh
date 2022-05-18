@@ -21,9 +21,10 @@ cd ..
 # mate-terminal
 pwd
 
-cd build/app/emulator/ && mate-terminal -e ./emulator &
+cd build/app/emulator/ && gnome-terminal --geometry 50x12+0-0 -e ./emulator &
 echo "open emulator terminal"
-cd build/app/input_handler/ && mate-terminal  -e ./input_handler &
+cd build/app/input_handler/ && gnome-terminal --geometry 60x12+430-0 -e ./input_handler &
 echo "open input_handler terminal"
-cd build/app/output_display/ && mate-terminal  --command="./avic -c engineCAN" &
+cd build/app/output_display/ && gnome-terminal --geometry 60x12+930-0   --command="./avic -c engineCAN" &
 echo "open output display"
+gnom-terminal  --geometry 60x12-0-0 --command="candump engineCAN" &
