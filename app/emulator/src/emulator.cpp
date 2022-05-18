@@ -8,35 +8,30 @@ Emulator::Emulator()
   current_rpm = 0;
   previous_pedal_input = 0;
   car_speed = 0;
-  engine_state_input = 0;
   engine_state = 0;
   gear = gear_lever::PARK; // Set gear_lever::PARK as default
   dGear = 1;
   pedal = 0;
-  pedal_input = 0;
 }
-
-// Emulator() = default;
-Emulator::~Emulator() {}
 
 int Emulator::getIdleRPM() const { return idle_rpm; }
 int Emulator::getMaxRPM() const { return max_rpm; }
 int Emulator::getCurrentRPM() const { return current_rpm; }
 bool Emulator::getEngineState() const { return engine_state; }
 
-void Emulator::setCurrentRPM(int pedal_input) {
+void Emulator::setCurrentRPM(int _pedal_input) {
 
   // Check if accelerate or deaccelerate
-  if (pedal_input > previous_pedal_input)
+  if (_pedal_input > this->previous_pedal_input)
     pedal = 1;
-  else if (pedal_input < previous_pedal_input)
+  else if (_pedal_input < this->previous_pedal_input)
     pedal = 0;
 
   float damp_fact = 100;
-  if (dGear > 1 && (pedal_input * rpm_range / 100) > current_rpm && pedal) {
-    damp_fact = 100 * float(current_rpm) / ((pedal_input * rpm_range) / 80);
-  } else if ((pedal_input * rpm_range / 100) < current_rpm && !pedal) {
-    damp_fact = 1000 * float(((pedal_input + 0.1 * dGear) * rpm_range) / 100) /
+  if (dGear > 1 && (_pedal_input * rpm_range / 100) > current_rpm && pedal) {
+    damp_fact = 100 * float(current_rpm) / ((_pedal_input * rpm_range) / 80);
+  } else if ((_pedal_input * rpm_range / 100) < current_rpm && !pedal) {
+    damp_fact = 1000 * float(((_pedal_input + 0.1 * dGear) * rpm_range) / 100) /
                 current_rpm;
   }
 
@@ -48,24 +43,26 @@ void Emulator::setCurrentRPM(int pedal_input) {
     else if (current_rpm > max_rpm)
       this->current_rpm = max_rpm;
     else {
-      if (pedal_input == 0 && car_speed <= 6)
+      if (_pedal_input == 0 && car_speed <= 6)
         this->current_rpm = idle_rpm + random() % 50;
       else {
-        if (damp_fact < pedal_input && pedal) {
-          this->current_rpm = (previous_pedal_input + 1) * rpm_range / 100;
+        if (damp_fact < _pedal_input && pedal) {
+          this->current_rpm =
+              (previous_pedal_input + 1) * rpm_range / 100 + random() % 50;
           previous_pedal_input += 1;
-        } else if (damp_fact > pedal_input && !pedal) {
-          this->current_rpm = (previous_pedal_input - 1) * rpm_range / 100;
+        } else if (damp_fact > _pedal_input && !pedal) {
+          this->current_rpm =
+              (previous_pedal_input - 1) * rpm_range / 100 + random() % 50;
           previous_pedal_input -= 1;
         } else {
-          this->current_rpm = pedal_input * rpm_range / 100;
-          previous_pedal_input = pedal_input;
+          this->current_rpm = _pedal_input * rpm_range / 100 + random() % 50;
+          previous_pedal_input = _pedal_input;
         }
       }
     }
 
     // Store
-    // previous_pedal_input = pedal_input;
+    // previous_pedal_input = _pedal_input;
 
   } else if (!engine_state) {
     // If engine is off, RPM = 0
@@ -139,9 +136,9 @@ void Emulator::moveForward() {
 
 int Emulator::getMaxGear() const { return max_gear; }
 
-bool Emulator::checkGear(int gear) {
+bool Emulator::checkGear(int _gear) {
   // Check if user input is correct
-  return gear > -1 && gear < 4;
+  return _gear > -1 && _gear < 4;
 }
 
 int Emulator::getCurrentGear() const { return gear; }
@@ -161,15 +158,15 @@ int Emulator::getDGear() const { return dGear; }
 
 float Emulator::getCarSpeed() const { return car_speed; }
 
-void Emulator::setCarSpeed(float car_speed) {
+void Emulator::setCarSpeed(float _car_speed) {
   // limit car speed to interval 0-250
-  if (car_speed < 0)
-    car_speed = 0;
-  else if (car_speed > 250)
-    car_speed = 250;
+  if (_car_speed < 0)
+    this->car_speed = 0;
+  else if (_car_speed > 250)
+    this->car_speed = 250;
 
   if (engine_state)
-    this->car_speed = car_speed;
+    this->car_speed = _car_speed;
 }
 
 void Emulator::shiftUp() {
@@ -180,6 +177,6 @@ void Emulator::shiftUp() {
 
 void Emulator::shiftDown() {
   // Check if D gear is inside interval 1-6
-  if (dGear > 1 && dGear < max_gear + 1)
+  if (dGear > 1 && dGear <= max_gear)
     dGear--;
 }
