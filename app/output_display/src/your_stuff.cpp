@@ -34,15 +34,14 @@ yourStuff::yourStuff(const std::string &_ifName, QObject *_vs) {
     exit(-1); // emit die();
 
   this->InstrumentCluster.init(_vs);
-
+  this->Counter = 0;
   this->startTimer(1);
 }
 
 bool yourStuff::run() {
   bool ret = true;
-  CANOpener::ReadStatus status = CANOpener::ReadStatus::OK;
   canfd_frame frame;
-  this->CANReader.read(&frame);
+  CANOpener::ReadStatus status = this->CANReader.read(&frame);
   /*while*/ if (status == CANOpener::ReadStatus::OK) {
     this->YouHaveJustRecievedACANFrame(&frame);
   }
@@ -53,7 +52,8 @@ bool yourStuff::run() {
     this->Counter++;
   else
     this->Counter = 0;
-  // if (this->Counter > 200) ret = false;
+  if (this->Counter > 1000)
+    ret = false;
   return ret;
 }
 

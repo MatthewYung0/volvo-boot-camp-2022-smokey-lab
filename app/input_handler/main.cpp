@@ -26,9 +26,31 @@ int main() {
 
     if ((ch = getch()) == ERR) {
     }
-    can_msg.SetFrame(ch);
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    SendMessage(sockat_can, can_msg.frame);
+    if (ch == EXIT) {
+      bool run = true;
+      while (run) {
+        for (int i = 0; i < 120; i++) {
+          can_msg.SetFrame(THROTTLE_0);
+          SendMessage(sockat_can, can_msg.frame);
+          std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        }
+        for (int i = 0; i < 10; i++) {
+          can_msg.SetFrame(GEAR_PARK);
+          SendMessage(sockat_can, can_msg.frame);
+          std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        }
+        can_msg.SetFrame(START_STOP);
+        can_msg.SetFrame(ch);
+        SendMessage(sockat_can, can_msg.frame);
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        run = false;
+        exit(-1);
+      }
+    } else {
+      can_msg.SetFrame(ch);
+      SendMessage(sockat_can, can_msg.frame);
+      std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
   }
 
   endwin();
